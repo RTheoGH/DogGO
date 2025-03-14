@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="AIgricultor"
-run/main_scene="res://src/scenes/menu/Menu.tscn"
+config/name="DogGO"
+run/main_scene="res://src/scenes/board/board.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
