@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4ei8rii3s46p"]
+
+[ext_resource type="Script" path="res://src/scenes/board/board.gd" id="1_uoraa"]
+[ext_resource type="Script" path="res://src/classes/player.gd" id="2_6ai7i"]
+
+[sub_resource type="Resource" id="Resource_sal3q"]
+script = ExtResource("2_6ai7i")
+name = "Utilisateur"
+ai_mode = 0
+team = "x"
+
+[sub_resource type="Resource" id="Resource_ysuud"]
+script = ExtResource("2_6ai7i")
+name = "IA"
+ai_mode = 1
+team = "o"
+
+[node name="board" type="Node2D"]
+script = ExtResource("1_uoraa")
+player_1 = SubResource("Resource_sal3q")
+player_2 = SubResource("Resource_ysuud")
+
+[node name="squares" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="squares"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
