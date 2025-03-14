@@ -3,7 +3,8 @@ extends Node2D
 const SQUARE = preload("res://src/scenes/square/square.tscn")
 
 const square_size := 200
-const map_size := Vector2i(3, 3)
+var goban_size := 7
+var map_size := Vector2i(goban_size, goban_size)
 const winning_length:int = 3
 
 @export var player_1:Player
@@ -50,11 +51,62 @@ func _ready() -> void:
 	Gamemaster.launch_game()
 
 func try_take(pos:Vector2i) -> bool:
+	for n in get_neighbors(pos):
+		print(n)
 	if grid[pos.x][pos.y].is_free():
 		grid[pos.x][pos.y].take()
 		check_win_condition(pos)
 		return true
 	return false
+	
+func get_neighbors(pos:Vector2i):
+	var neighbors = []
+	assert(goban_size >= 2, "minimum size : 2")
+	if pos.x == 0:
+		neighbors.append(Vector2i(pos.x+1, pos.y))
+		if pos.y == 0:
+			neighbors.append(Vector2i(pos.x+1, pos.y+1))
+			neighbors.append(Vector2i(pos.x, pos.y+1))
+		elif pos.y == goban_size:
+			neighbors.append(Vector2i(pos.x+1, pos.y-1))
+			neighbors.append(Vector2i(pos.x, pos.y-1))
+		else:
+			neighbors.append(Vector2i(pos.x+1, pos.y+1))
+			neighbors.append(Vector2i(pos.x, pos.y+1))
+			neighbors.append(Vector2i(pos.x+1, pos.y-1))
+			neighbors.append(Vector2i(pos.x, pos.y-1))
+	elif pos.x == goban_size:
+		neighbors.append(Vector2i(pos.x-1, pos.y))
+		if pos.y == 0:
+			neighbors.append(Vector2i(pos.x-1, pos.y+1))
+			neighbors.append(Vector2i(pos.x, pos.y+1))
+		elif pos.y == goban_size:
+			neighbors.append(Vector2i(pos.x-1, pos.y-1))
+			neighbors.append(Vector2i(pos.x, pos.y-1))
+		else:
+			neighbors.append(Vector2i(pos.x-1, pos.y+1))
+			neighbors.append(Vector2i(pos.x, pos.y+1))
+			neighbors.append(Vector2i(pos.x-1, pos.y-1))
+			neighbors.append(Vector2i(pos.x, pos.y-1))
+	else:
+		neighbors.append(Vector2i(pos.x-1, pos.y))
+		neighbors.append(Vector2i(pos.x+1, pos.y))
+		if pos.y == 0:
+			neighbors.append(Vector2i(pos.x-1, pos.y+1))
+			neighbors.append(Vector2i(pos.x, pos.y+1))
+			neighbors.append(Vector2i(pos.x+1, pos.y+1))
+		elif pos.y == goban_size:
+			neighbors.append(Vector2i(pos.x-1, pos.y-1))
+			neighbors.append(Vector2i(pos.x, pos.y-1))
+			neighbors.append(Vector2i(pos.x+1, pos.y-1))
+		else:
+			neighbors.append(Vector2i(pos.x-1, pos.y+1))
+			neighbors.append(Vector2i(pos.x, pos.y+1))
+			neighbors.append(Vector2i(pos.x+1, pos.y+1))
+			neighbors.append(Vector2i(pos.x-1, pos.y-1))
+			neighbors.append(Vector2i(pos.x, pos.y-1))
+			neighbors.append(Vector2i(pos.x+1, pos.y-1))
+	return neighbors
 
 func preview():
 	var res:Array

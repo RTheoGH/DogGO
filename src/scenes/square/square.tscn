@@ -183,6 +183,7 @@ texture_filter = 1
 position = Vector2(25, 25)
 scale = Vector2(1.5625, 1.5625)
 sprite_frames = SubResource("SpriteFrames_jc0eg")
+animation = &"o"
 speed_scale = 2.5
 
 [connection signal="minimum_size_changed" from="." to="." method="_on_minimum_size_changed"]

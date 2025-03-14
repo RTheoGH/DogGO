@@ -6,6 +6,7 @@ enum MODES {USER, RANDOM, MINMAX}
 
 @export var name: String
 @export var ai_mode:MODES = MODES.USER
+@export var nb_pierres = 0
 
 @export_enum("o", "x") var team := "o"
 
