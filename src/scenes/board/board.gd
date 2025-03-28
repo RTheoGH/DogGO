@@ -24,9 +24,9 @@ class Square:
 	func is_free():
 		return team == "NEUTRAL"
 	
-	func take():
-		button.activate(Gamemaster.current_player)
-		team = Gamemaster.current_player.team
+	func take(player:Player):
+		button.activate(player)
+		team = player.team
 	
 var grid:Array[Array] #[[Square]]
 
@@ -55,11 +55,22 @@ func try_take(pos:Vector2i) -> bool:
 		print(n)
 	var surrounded_list:Array = []
 	if grid[pos.x][pos.y].is_free():
-		grid[pos.x][pos.y].take()
+		var other_player:Player = Gamemaster.players[(Gamemaster.current_player_index+1)%2]
+		grid[pos.x][pos.y].take(Gamemaster.current_player)
+		
+		if surrounded_iter(pos, Gamemaster.current_player.team, surrounded_list):
+			for p in surrounded_list:
+						grid[p.x][p.y].take(other_player)
+		
+		
 		for n in get_neighbors(pos):
-			rec_surrounded(pos, surrounded_list)
-		for p in surrounded_list:
-			grid[p.x][p.y].take()
+			if grid[n .x][n .y].team == "NEUTRAL": continue
+			surrounded_list = []
+			var v := surrounded_iter(n, other_player.team, surrounded_list)
+			if v:
+				for p in surrounded_list:
+					grid[p.x][p.y].take(Gamemaster.current_player)
+					print(p, "  TAKEN")
 		check_win_condition(pos)
 		return true
 	return false
@@ -114,24 +125,44 @@ func get_neighbors(pos:Vector2i):
 	return neighbors
 	
 var same_team_neighbors = []
-func is_surrounded(pos:Vector2i, same_team_neighbors:Array):
+
+func is_surrounded(pos:Vector2i, same_team_neighbors:Array, team:String):
 	for n in get_neighbors(pos):
 		if grid[n.x][n.y].team  == "NEUTRAL" :
 			return false
-		if grid[n.x][n.y].team == Gamemaster.current_player.team and n not in same_team_neighbors:
+		if grid[n.x][n.y].team == team and n not in same_team_neighbors:
 			return false
 	same_team_neighbors.append(pos)
 	return true
 
-func rec_surrounded(pos:Vector2i,same_team_neighbors:Array):
-	if is_surrounded(pos, same_team_neighbors):
+func rec_surrounded(pos:Vector2i,same_team_neighbors:Array, team:String):
+	if is_surrounded(pos, same_team_neighbors, team):
 		return true
 	else:
 		for n in get_neighbors(pos):
 			#print(n)
 			if Gamemaster.current_player.team == grid[n.x][n.y].team and n not in same_team_neighbors:
 				same_team_neighbors.append(pos)
-				rec_surrounded(n, same_team_neighbors)
+				return rec_surrounded(n, same_team_neighbors, team)
+
+func surrounded_iter(pos:Vector2i, team:String, same_team_neighbors:Array) -> bool:
+	var to_check:Array[Vector2i] = [pos]
+	
+	while !to_check.is_empty():
+		var current_pos:Vector2i = to_check.pop_back()
+		same_team_neighbors.append(current_pos)
+		var n_enemy_sides := 0
+		for n in get_neighbors(current_pos):
+			if grid[n.x][n.y].team  == "NEUTRAL" :
+				return false
+			#print(n)
+			if team == grid[n.x][n.y].team and n not in same_team_neighbors:
+				to_check.append(n)
+			else:
+				n_enemy_sides += 1
+		if to_check.is_empty() && n_enemy_sides == 4: return true
+	
+	return true;
 
 func preview():
 	var res:Array

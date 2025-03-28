@@ -1,62 +1,12 @@
-[gd_scene load_steps=21 format=3 uid="uid://x08ghaei2hdb"]
+[gd_scene load_steps=7 format=3 uid="uid://x08ghaei2hdb"]
 
 [ext_resource type="Script" path="res://src/scenes/square/square.gd" id="1_jrr86"]
 [ext_resource type="Texture2D" uid="uid://cs1yqiple4i24" path="res://resources/images/chase.png" id="2_g6elq"]
 [ext_resource type="Texture2D" uid="uid://bbqm73ysm46h2" path="res://resources/images/neutral.png" id="2_itwpy"]
-[ext_resource type="Texture2D" uid="uid://c1todd2tmhick" path="res://resources/images/o.png" id="3_0mmwq"]
-[ext_resource type="Texture2D" uid="uid://gdqhesnyf62r" path="res://resources/images/x.png" id="3_n1164"]
 [ext_resource type="Texture2D" uid="uid://buut74wa6585s" path="res://resources/images/marshall.png" id="4_ca5ne"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4v2y8"]
 atlas = ExtResource("2_itwpy")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bwfhk"]
-atlas = ExtResource("3_0mmwq")
-region = Rect2(160, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fgcwb"]
-atlas = ExtResource("3_0mmwq")
-region = Rect2(128, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_naqsx"]
-atlas = ExtResource("3_0mmwq")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jijt3"]
-atlas = ExtResource("3_0mmwq")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6y1y0"]
-atlas = ExtResource("3_0mmwq")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_d8t2b"]
-atlas = ExtResource("3_0mmwq")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3gx8c"]
-atlas = ExtResource("3_n1164")
-region = Rect2(160, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kr7r7"]
-atlas = ExtResource("3_n1164")
-region = Rect2(128, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ugtw0"]
-atlas = ExtResource("3_n1164")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ll452"]
-atlas = ExtResource("3_n1164")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_11l3n"]
-atlas = ExtResource("3_n1164")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3ap13"]
-atlas = ExtResource("3_n1164")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jc0eg"]
@@ -79,52 +29,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bwfhk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fgcwb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_naqsx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jijt3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6y1y0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_d8t2b")
-}],
-"loop": false,
-"name": &"old_o",
-"speed": 16.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3gx8c")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kr7r7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ugtw0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ll452")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_11l3n")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3ap13")
-}],
-"loop": false,
-"name": &"old_x",
-"speed": 16.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": ExtResource("4_ca5ne")
 }],
 "loop": true,
@@ -142,13 +46,28 @@ offset_bottom = -41.68
 flat = true
 script = ExtResource("1_jrr86")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="O" type="AnimatedSprite2D" parent="Node2D"]
+visible = false
 z_index = -1
 texture_filter = 1
 position = Vector2(25, 25)
 scale = Vector2(1.5625, 1.5625)
 sprite_frames = SubResource("SpriteFrames_jc0eg")
-autoplay = "default"
+animation = &"o"
+autoplay = "o"
+speed_scale = 2.5
+
+[node name="X" type="AnimatedSprite2D" parent="Node2D"]
+visible = false
+z_index = -1
+texture_filter = 1
+position = Vector2(25, 25)
+scale = Vector2(1.5625, 1.5625)
+sprite_frames = SubResource("SpriteFrames_jc0eg")
+animation = &"x"
+autoplay = "x"
 speed_scale = 2.5
 
 [connection signal="minimum_size_changed" from="." to="." method="_on_minimum_size_changed"]
