@@ -51,8 +51,8 @@ func _ready() -> void:
 	Gamemaster.launch_game()
 
 func try_take(pos:Vector2i) -> bool:
-	#for n in get_neighbors(pos):
-		#print(n)
+	for n in get_neighbors(pos):
+		print(n)
 	var surrounded_list:Array = []
 	if grid[pos.x][pos.y].is_free():
 		grid[pos.x][pos.y].take()
@@ -72,7 +72,7 @@ func get_neighbors(pos:Vector2i):
 		if pos.y == 0:
 			#neighbors.append(Vector2i(pos.x+1, pos.y+1))
 			neighbors.append(Vector2i(pos.x, pos.y+1))
-		elif pos.y == goban_size:
+		elif pos.y == goban_size-1:
 			#neighbors.append(Vector2i(pos.x+1, pos.y-1))
 			neighbors.append(Vector2i(pos.x, pos.y-1))
 		else:
@@ -80,12 +80,12 @@ func get_neighbors(pos:Vector2i):
 			neighbors.append(Vector2i(pos.x, pos.y+1))
 			#neighbors.append(Vector2i(pos.x+1, pos.y-1))
 			neighbors.append(Vector2i(pos.x, pos.y-1))
-	elif pos.x == goban_size:
+	elif pos.x == goban_size-1:
 		neighbors.append(Vector2i(pos.x-1, pos.y))
 		if pos.y == 0:
 			#neighbors.append(Vector2i(pos.x-1, pos.y+1))
 			neighbors.append(Vector2i(pos.x, pos.y+1))
-		elif pos.y == goban_size:
+		elif pos.y == goban_size-1:
 			#neighbors.append(Vector2i(pos.x-1, pos.y-1))
 			neighbors.append(Vector2i(pos.x, pos.y-1))
 		else:
@@ -100,7 +100,7 @@ func get_neighbors(pos:Vector2i):
 			#neighbors.append(Vector2i(pos.x-1, pos.y+1))
 			neighbors.append(Vector2i(pos.x, pos.y+1))
 			#neighbors.append(Vector2i(pos.x+1, pos.y+1))
-		elif pos.y == goban_size:
+		elif pos.y == goban_size-1:
 			#neighbors.append(Vector2i(pos.x-1, pos.y-1))
 			neighbors.append(Vector2i(pos.x, pos.y-1))
 			#neighbors.append(Vector2i(pos.x+1, pos.y-1))
@@ -128,6 +128,7 @@ func rec_surrounded(pos:Vector2i,same_team_neighbors:Array):
 		return true
 	else:
 		for n in get_neighbors(pos):
+			#print(n)
 			if Gamemaster.current_player.team == grid[n.x][n.y].team and n not in same_team_neighbors:
 				same_team_neighbors.append(pos)
 				rec_surrounded(n, same_team_neighbors)
