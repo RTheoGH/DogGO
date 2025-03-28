@@ -2,7 +2,7 @@ extends Node2D
 
 const SQUARE = preload("res://src/scenes/square/square.tscn")
 
-const square_size := 200
+const square_size := 125
 var goban_size := 7
 var map_size := Vector2i(goban_size, goban_size)
 const winning_length:int = 3
@@ -13,7 +13,7 @@ const winning_length:int = 3
 class Square:
 	var button:Button
 	var team:String
-	
+		
 	func _init(button) -> void:
 		self.button = button
 		self.team = "NEUTRAL"
@@ -51,10 +51,15 @@ func _ready() -> void:
 	Gamemaster.launch_game()
 
 func try_take(pos:Vector2i) -> bool:
-	for n in get_neighbors(pos):
-		print(n)
+	#for n in get_neighbors(pos):
+		#print(n)
+	var surrounded_list:Array = []
 	if grid[pos.x][pos.y].is_free():
 		grid[pos.x][pos.y].take()
+		for n in get_neighbors(pos):
+			rec_surrounded(pos, surrounded_list)
+		for p in surrounded_list:
+			grid[p.x][p.y].take()
 		check_win_condition(pos)
 		return true
 	return false
@@ -107,6 +112,25 @@ func get_neighbors(pos:Vector2i):
 			neighbors.append(Vector2i(pos.x, pos.y-1))
 			#neighbors.append(Vector2i(pos.x+1, pos.y-1))
 	return neighbors
+	
+var same_team_neighbors = []
+func is_surrounded(pos:Vector2i, same_team_neighbors:Array):
+	for n in get_neighbors(pos):
+		if grid[n.x][n.y].team  == "NEUTRAL" :
+			return false
+		if grid[n.x][n.y].team == Gamemaster.current_player.team and n not in same_team_neighbors:
+			return false
+	same_team_neighbors.append(pos)
+	return true
+
+func rec_surrounded(pos:Vector2i,same_team_neighbors:Array):
+	if is_surrounded(pos, same_team_neighbors):
+		return true
+	else:
+		for n in get_neighbors(pos):
+			if Gamemaster.current_player.team == grid[n.x][n.y].team and n not in same_team_neighbors:
+				same_team_neighbors.append(pos)
+				rec_surrounded(n, same_team_neighbors)
 
 func preview():
 	var res:Array
