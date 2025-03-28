@@ -23,5 +23,5 @@ func activate(player:Player) -> void:
 	)
 
 func _on_minimum_size_changed() -> void:
-	$AnimatedSprite2D.scale = Vector2.ONE * 0.75 * (custom_minimum_size.y / 50.0)
+	$AnimatedSprite2D.scale = Vector2.ONE * 0.7 * (custom_minimum_size.y / 50.0)
 	$AnimatedSprite2D.position = custom_minimum_size/2.0

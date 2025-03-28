@@ -2,7 +2,7 @@ extends Node2D
 
 const SQUARE = preload("res://src/scenes/square/square.tscn")
 
-const square_size := 200
+const square_size := 125
 var goban_size := 7
 var map_size := Vector2i(goban_size, goban_size)
 const winning_length:int = 3
