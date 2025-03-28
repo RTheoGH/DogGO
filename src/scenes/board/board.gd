@@ -65,47 +65,47 @@ func get_neighbors(pos:Vector2i):
 	if pos.x == 0:
 		neighbors.append(Vector2i(pos.x+1, pos.y))
 		if pos.y == 0:
-			neighbors.append(Vector2i(pos.x+1, pos.y+1))
+			#neighbors.append(Vector2i(pos.x+1, pos.y+1))
 			neighbors.append(Vector2i(pos.x, pos.y+1))
 		elif pos.y == goban_size:
-			neighbors.append(Vector2i(pos.x+1, pos.y-1))
+			#neighbors.append(Vector2i(pos.x+1, pos.y-1))
 			neighbors.append(Vector2i(pos.x, pos.y-1))
 		else:
-			neighbors.append(Vector2i(pos.x+1, pos.y+1))
+			#neighbors.append(Vector2i(pos.x+1, pos.y+1))
 			neighbors.append(Vector2i(pos.x, pos.y+1))
-			neighbors.append(Vector2i(pos.x+1, pos.y-1))
+			#neighbors.append(Vector2i(pos.x+1, pos.y-1))
 			neighbors.append(Vector2i(pos.x, pos.y-1))
 	elif pos.x == goban_size:
 		neighbors.append(Vector2i(pos.x-1, pos.y))
 		if pos.y == 0:
-			neighbors.append(Vector2i(pos.x-1, pos.y+1))
+			#neighbors.append(Vector2i(pos.x-1, pos.y+1))
 			neighbors.append(Vector2i(pos.x, pos.y+1))
 		elif pos.y == goban_size:
-			neighbors.append(Vector2i(pos.x-1, pos.y-1))
+			#neighbors.append(Vector2i(pos.x-1, pos.y-1))
 			neighbors.append(Vector2i(pos.x, pos.y-1))
 		else:
-			neighbors.append(Vector2i(pos.x-1, pos.y+1))
+			#neighbors.append(Vector2i(pos.x-1, pos.y+1))
 			neighbors.append(Vector2i(pos.x, pos.y+1))
-			neighbors.append(Vector2i(pos.x-1, pos.y-1))
+			#neighbors.append(Vector2i(pos.x-1, pos.y-1))
 			neighbors.append(Vector2i(pos.x, pos.y-1))
 	else:
 		neighbors.append(Vector2i(pos.x-1, pos.y))
 		neighbors.append(Vector2i(pos.x+1, pos.y))
 		if pos.y == 0:
-			neighbors.append(Vector2i(pos.x-1, pos.y+1))
+			#neighbors.append(Vector2i(pos.x-1, pos.y+1))
 			neighbors.append(Vector2i(pos.x, pos.y+1))
-			neighbors.append(Vector2i(pos.x+1, pos.y+1))
+			#neighbors.append(Vector2i(pos.x+1, pos.y+1))
 		elif pos.y == goban_size:
-			neighbors.append(Vector2i(pos.x-1, pos.y-1))
+			#neighbors.append(Vector2i(pos.x-1, pos.y-1))
 			neighbors.append(Vector2i(pos.x, pos.y-1))
-			neighbors.append(Vector2i(pos.x+1, pos.y-1))
+			#neighbors.append(Vector2i(pos.x+1, pos.y-1))
 		else:
-			neighbors.append(Vector2i(pos.x-1, pos.y+1))
+			#neighbors.append(Vector2i(pos.x-1, pos.y+1))
 			neighbors.append(Vector2i(pos.x, pos.y+1))
-			neighbors.append(Vector2i(pos.x+1, pos.y+1))
-			neighbors.append(Vector2i(pos.x-1, pos.y-1))
+			#neighbors.append(Vector2i(pos.x+1, pos.y+1))
+			#neighbors.append(Vector2i(pos.x-1, pos.y-1))
 			neighbors.append(Vector2i(pos.x, pos.y-1))
-			neighbors.append(Vector2i(pos.x+1, pos.y-1))
+			#neighbors.append(Vector2i(pos.x+1, pos.y-1))
 	return neighbors
 
 func preview():
