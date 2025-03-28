@@ -1,0 +1,121 @@
+[gd_scene load_steps=2 format=3 uid="uid://c87elogsvxdpn"]
+
+[ext_resource type="Script" uid="uid://ddrscf1omr1jx" path="res://src/scenes/UI/setup_game.gd" id="1_s3fkw"]
+
+[node name="Setup Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s3fkw")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.516
+anchor_top = 0.035
+anchor_right = 0.614
+anchor_bottom = 0.099
+offset_left = 0.279907
+offset_top = 0.200001
+offset_right = 0.119995
+offset_bottom = 0.0799942
+theme_override_font_sizes/font_size = 32
+text = "Setup Game"
+horizontal_alignment = 1
+
+[node name="Exit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.709
+anchor_right = 0.426
+anchor_bottom = 0.844
+offset_top = 0.279968
+offset_right = 0.0799561
+offset_bottom = 0.47998
+theme_override_font_sizes/font_size = 32
+text = "Exit"
+
+[node name="BoardSize" type="OptionButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.482
+anchor_top = 0.281
+anchor_right = 0.607
+anchor_bottom = 0.344
+offset_left = -0.440063
+offset_top = 0.519989
+offset_right = -0.440063
+offset_bottom = 0.47998
+alignment = 1
+selected = 0
+item_count = 2
+popup/item_0/text = "8x8"
+popup/item_0/id = 0
+popup/item_1/text = "16x16"
+popup/item_1/id = 1
+
+[node name="Label" type="Label" parent="BoardSize"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.843
+anchor_right = 1.0
+anchor_bottom = 0.314
+offset_left = 28.0
+offset_top = 10.324
+offset_right = -13.0
+offset_bottom = -3.352
+theme_override_font_sizes/font_size = 22
+text = "Select Board Size:
+"
+horizontal_alignment = 1
+
+[node name="SelectPlayer" type="OptionButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.278
+anchor_right = 0.369
+anchor_bottom = 0.342
+offset_left = 0.199997
+offset_top = -0.240021
+offset_right = 0.519958
+offset_bottom = -0.360016
+selected = 0
+item_count = 2
+popup/item_0/text = "Player 1"
+popup/item_0/id = 0
+popup/item_1/text = "Player 2"
+popup/item_1/id = 1
+
+[node name="Label2" type="Label" parent="SelectPlayer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.037
+anchor_top = -0.855
+anchor_right = 0.961
+offset_left = -0.0559998
+offset_top = -0.00499725
+offset_right = 0.0319824
+offset_bottom = -14.0
+theme_override_font_sizes/font_size = 22
+text = "Select Player:"
+horizontal_alignment = 1
+
+[node name="Launch" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.529
+anchor_top = 0.717
+anchor_right = 0.684
+anchor_bottom = 0.85
+offset_left = -0.680054
+offset_top = -12.36
+offset_right = -0.280029
+theme_override_font_sizes/font_size = 32
+text = "Launch"
+
+[connection signal="pressed" from="Launch" to="." method="_on_launch_pressed"]
