@@ -2,20 +2,30 @@ extends Resource
 class_name Player
 
 
-enum MODES {USER, RANDOM, MINMAX}
+enum MODES {USER, RANDOM, MONTECARLO}
+
+enum HEURISTICS {DUMB}
 
 @export var name: String
 @export var ai_mode:MODES = MODES.USER
+@export var heuristic:HEURISTICS = HEURISTICS.DUMB
 @export var nb_pierres = 0
 
 @export_enum("o", "x") var team := "o"
 
 func _play(board):
+	var heuristic_fun:Callable;
+	match heuristic:
+		HEURISTICS.DUMB:
+			heuristic_fun = heuristic_dumb
+	
+	
+	
 	match ai_mode:
 		MODES.RANDOM:
 			play_random(board)
-		MODES.MINMAX:
-			play_minmax(board)
+		MODES.MONTECARLO:
+			play_montecarlo(board)
 
 func _finish_turn():
 	Gamemaster.turn_finished.emit()
@@ -36,23 +46,17 @@ func play_random(board):
 func play_minmax(board):
 	var preview = board.get_preview()
 
-func heuristic():
+func heuristic_dumb():
 	pass
+	
+
 func win_condition():
 	pass
 
-func minmax_rec(preview:Array, depth:int, my_turn:bool):
+
+func play_montecarlo(board):
+	var preview = board.get_preview()
 	
-	if depth == 0 or preview:
-		return heuristic()
+func montercarlo_rec(preview:Array, n_moves:int, n_bests:int, k:int):
+	var possible_moves:Array[Vector2i] = []
 	
-	var value:float
-	if my_turn:
-		value = -99999
-		for child in ["all possibilities"]:
-			value = max(value, minmax_rec(child, depth - 1, false))
-	else:
-		value = 99999
-		for child in ["all possibilities"]:
-			value = min(value, minmax_rec(child, depth - 1, true))
-	return value
