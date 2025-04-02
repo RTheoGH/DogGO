@@ -14,7 +14,7 @@ func _on_pressed() -> void:
 			Gamemaster.current_player._finish_turn()
 	
 func activate(player:Player = null) -> void:
-	disabled = true
+	#disabled = true
 	if player == null:
 		$Node2D/X.hide()
 		$Node2D/O.hide()
