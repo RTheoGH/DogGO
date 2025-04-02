@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c87elogsvxdpn"]
 
-[ext_resource type="Script" uid="uid://ddrscf1omr1jx" path="res://src/scenes/UI/setup_game.gd" id="1_s3fkw"]
+[ext_resource type="Script" path="res://src/scenes/UI/setup_game.gd" id="1_s3fkw"]
 
 [node name="Setup Game" type="Control"]
 layout_mode = 3
@@ -26,7 +26,7 @@ theme_override_font_sizes/font_size = 32
 text = "Setup Game"
 horizontal_alignment = 1
 
-[node name="Exit" type="Button" parent="."]
+[node name="Back" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.25
@@ -37,7 +37,7 @@ offset_top = 0.279968
 offset_right = 0.0799561
 offset_bottom = 0.47998
 theme_override_font_sizes/font_size = 32
-text = "Exit"
+text = "Back"
 
 [node name="BoardSize" type="OptionButton" parent="."]
 layout_mode = 1
@@ -53,9 +53,8 @@ offset_bottom = 0.47998
 alignment = 1
 selected = 0
 item_count = 2
-popup/item_0/text = "8x8"
-popup/item_0/id = 0
-popup/item_1/text = "16x16"
+popup/item_0/text = "7x7"
+popup/item_1/text = "14x14"
 popup/item_1/id = 1
 
 [node name="Label" type="Label" parent="BoardSize"]
@@ -87,7 +86,6 @@ offset_bottom = -0.360016
 selected = 0
 item_count = 2
 popup/item_0/text = "Player 1"
-popup/item_0/id = 0
 popup/item_1/text = "Player 2"
 popup/item_1/id = 1
 

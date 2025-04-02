@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4ei8rii3s46p"]
+[gd_scene load_steps=6 format=3 uid="uid://b4ei8rii3s46p"]
 
 [ext_resource type="Script" path="res://src/scenes/board/board.gd" id="1_uoraa"]
 [ext_resource type="Script" path="res://src/classes/player.gd" id="2_6ai7i"]
+[ext_resource type="Texture2D" uid="uid://dpodbwcr5qfis" path="res://resources/images/pawpatrol.png" id="3_swugr"]
 
 [sub_resource type="Resource" id="Resource_sal3q"]
 script = ExtResource("2_6ai7i")
@@ -38,3 +39,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(939, 540.25)
+scale = Vector2(1.26913, 1.17983)
+texture = ExtResource("3_swugr")

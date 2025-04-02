@@ -45,5 +45,5 @@ func animate():
 		).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 
 func _on_minimum_size_changed() -> void:
-	$Node2D.scale = Vector2.ONE * 0.7 * (custom_minimum_size.y / 50.0)
+	$Node2D.scale = Vector2.ONE * 0.5 * (custom_minimum_size.y / 50.0)
 	$Node2D.position = custom_minimum_size/2.0
