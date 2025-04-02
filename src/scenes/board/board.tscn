@@ -9,7 +9,7 @@ script = ExtResource("2_6ai7i")
 name = "Utilisateur"
 ai_mode = 0
 heuristic = 0
-nb_pierres = 0
+nb_pierres = 50
 team = "x"
 
 [sub_resource type="Resource" id="Resource_ysuud"]
@@ -17,7 +17,7 @@ script = ExtResource("2_6ai7i")
 name = "IA"
 ai_mode = 1
 heuristic = 0
-nb_pierres = 0
+nb_pierres = 50
 team = "o"
 
 [node name="board" type="Node2D"]
