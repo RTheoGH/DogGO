@@ -55,7 +55,7 @@ func _ready() -> void:
 			grid[i].append(Square.new(new_square))
 	Gamemaster.launch_game()
 
-func try_take(pos:Vector2i) -> bool:
+func try_take(pos:Vector2i, try:bool = false) -> bool:
 	for n in get_neighbors(pos):
 		print(n)
 	var surrounded_list:Array = []
@@ -63,17 +63,23 @@ func try_take(pos:Vector2i) -> bool:
 		var other_player:Player = Gamemaster.players[(Gamemaster.current_player_index+1)%2]
 		
 		if !surrounded_iter(pos, Gamemaster.current_player.team, surrounded_list):
-			grid[pos.x][pos.y].take(Gamemaster.current_player)
+			if !try:
+				grid[pos.x][pos.y].take(Gamemaster.current_player)
+		else:
+			return false
 		
 		for n in get_neighbors(pos):
 			if grid[n .x][n .y].team == "NEUTRAL": continue
+			if grid[n.x][n.y].team == Gamemaster.current_player.team: continue
 			surrounded_list = []
 			var v := surrounded_iter(n, other_player.team, surrounded_list)
 			if v:
 				for p in surrounded_list:
-					grid[p.x][p.y].take(Gamemaster.current_player)
-					print(p, "  TAKEN")
-		check_win_condition(pos)
+					if !try:
+						grid[p.x][p.y].clear()
+						print(p, "  TAKEN")
+		if !try:
+			check_win_condition(pos)
 		return true
 	return false
 	
@@ -176,10 +182,17 @@ func preview():
 				grid[i][j].team
 			)
 	return res
-
+	
+func check_can_play() -> bool:
+	for i in map_size.x:
+		for j in map_size.y:
+			if try_take(Vector2i(i, j), true):
+				return true
+	return false
+ 
 func check_win_condition(pos:Vector2i):
 	var skip_turn = false # à faire : si les deux joueurs skippent leur tour
-	if((player_1.nb_pierres == 0 and player_2.nb_pierres == 0) or skip_turn):
+	if((player_1.nb_pierres == 0 and player_2.nb_pierres == 0) or skip_turn or !check_can_play()):
 		var nb_pierre_1 = 0
 		var nb_pierre_2 = 0
 		for i in map_size.x:

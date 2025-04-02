@@ -9,7 +9,7 @@ enum HEURISTICS {DUMB}
 @export var name: String
 @export var ai_mode:MODES = MODES.USER
 @export var heuristic:HEURISTICS = HEURISTICS.DUMB
-@export var nb_pierres = 50
+@export var nb_pierres = 25
 
 @export_enum("o", "x") var team := "o"
 
