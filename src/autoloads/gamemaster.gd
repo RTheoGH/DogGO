@@ -6,7 +6,7 @@ var board_node:Node
 var players = []
 
 var game_on:bool
-
+var can_play := true
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	game_on = true
@@ -25,9 +25,11 @@ func launch_game():
 		await next_turn()
 
 func next_turn():
+	can_play = false
 	await get_tree().create_timer(0.5).timeout
 	print("Playing: ", current_player.name)
 	print("awaiting turn finished...")
+	can_play = true
 	current_player._play.call_deferred(board_node)
 	await turn_finished
 	print("turn finished\n")

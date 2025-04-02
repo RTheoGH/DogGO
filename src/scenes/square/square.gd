@@ -6,7 +6,7 @@ var grid_position:Vector2i
 func _on_pressed() -> void:
 	if Gamemaster.current_player != null:
 		
-		if Gamemaster.current_player.ai_mode != Player.MODES.USER:
+		if Gamemaster.current_player.ai_mode != Player.MODES.USER or not Gamemaster.game_on or not Gamemaster.can_play :
 			print("Player tried to play when it wasn't a player's turn")
 			return
 		
@@ -29,7 +29,7 @@ func activate(player:Player = null) -> void:
 func animate():
 	var tween:Tween = create_tween()
 	
-	$Node2D.position = Vector2(randf_range(-1000, 1000), randf_range(-1000, 1000))
+	$Node2D.position = Vector2(0, 1500).rotated(randf_range(0, 2 * PI))
 	$Node2D.rotation = 1.2
 	
 	tween.tween_property(
@@ -45,6 +45,28 @@ func animate():
 		0,
 		0.5
 		).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+
+func clear():
+	var tween:Tween = create_tween()
+	
+	tween.tween_property(
+		$Node2D,
+		"position",
+		Vector2(0, 1500).rotated(randf_range(0, 2 * PI)),
+		0.4
+		).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	tween.parallel()
+	tween.tween_property(
+		$Node2D,
+		"rotation",
+		0.5,
+		0.5
+		).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	
+	await tween.finished
+	
+	$Node2D/O.hide()
+	$Node2D/X.hide()
 
 func _on_minimum_size_changed() -> void:
 	$Node2D.scale = Vector2.ONE * 0.5 * (custom_minimum_size.y / 50.0)

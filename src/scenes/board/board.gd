@@ -31,7 +31,7 @@ class Square:
 		
 	func clear():
 		self.team = "NEUTRAL"
-		button.activate()
+		button.clear()
 	
 var grid:Array[Array] #[[Square]]
 
@@ -55,6 +55,13 @@ func _ready() -> void:
 			grid[i].append(Square.new(new_square))
 	Gamemaster.launch_game()
 
+func clear_all(surrounded_list:Array):
+	await get_tree().create_timer(0.3).timeout
+	for p in surrounded_list:
+		await get_tree().create_timer(0.15).timeout
+		grid[p.x][p.y].clear()
+		print(p, "  TAKEN")
+
 func try_take(pos:Vector2i, try:bool = false) -> bool:
 	for n in get_neighbors(pos):
 		print(n)
@@ -74,10 +81,8 @@ func try_take(pos:Vector2i, try:bool = false) -> bool:
 			surrounded_list = []
 			var v := surrounded_iter(n, other_player.team, surrounded_list)
 			if v:
-				for p in surrounded_list:
-					if !try:
-						grid[p.x][p.y].clear()
-						print(p, "  TAKEN")
+				if !try:
+					clear_all(surrounded_list)
 		if !try:
 			check_win_condition(pos)
 		return true
@@ -86,50 +91,10 @@ func try_take(pos:Vector2i, try:bool = false) -> bool:
 func get_neighbors(pos:Vector2i):
 	var neighbors = []
 	assert(goban_size >= 2, "minimum size : 2")
-	if pos.x == 0:
-		neighbors.append(Vector2i(pos.x+1, pos.y))
-		if pos.y == 0:
-			#neighbors.append(Vector2i(pos.x+1, pos.y+1))
-			neighbors.append(Vector2i(pos.x, pos.y+1))
-		elif pos.y == goban_size-1:
-			#neighbors.append(Vector2i(pos.x+1, pos.y-1))
-			neighbors.append(Vector2i(pos.x, pos.y-1))
-		else:
-			#neighbors.append(Vector2i(pos.x+1, pos.y+1))
-			neighbors.append(Vector2i(pos.x, pos.y+1))
-			#neighbors.append(Vector2i(pos.x+1, pos.y-1))
-			neighbors.append(Vector2i(pos.x, pos.y-1))
-	elif pos.x == goban_size-1:
-		neighbors.append(Vector2i(pos.x-1, pos.y))
-		if pos.y == 0:
-			#neighbors.append(Vector2i(pos.x-1, pos.y+1))
-			neighbors.append(Vector2i(pos.x, pos.y+1))
-		elif pos.y == goban_size-1:
-			#neighbors.append(Vector2i(pos.x-1, pos.y-1))
-			neighbors.append(Vector2i(pos.x, pos.y-1))
-		else:
-			#neighbors.append(Vector2i(pos.x-1, pos.y+1))
-			neighbors.append(Vector2i(pos.x, pos.y+1))
-			#neighbors.append(Vector2i(pos.x-1, pos.y-1))
-			neighbors.append(Vector2i(pos.x, pos.y-1))
-	else:
-		neighbors.append(Vector2i(pos.x-1, pos.y))
-		neighbors.append(Vector2i(pos.x+1, pos.y))
-		if pos.y == 0:
-			#neighbors.append(Vector2i(pos.x-1, pos.y+1))
-			neighbors.append(Vector2i(pos.x, pos.y+1))
-			#neighbors.append(Vector2i(pos.x+1, pos.y+1))
-		elif pos.y == goban_size-1:
-			#neighbors.append(Vector2i(pos.x-1, pos.y-1))
-			neighbors.append(Vector2i(pos.x, pos.y-1))
-			#neighbors.append(Vector2i(pos.x+1, pos.y-1))
-		else:
-			#neighbors.append(Vector2i(pos.x-1, pos.y+1))
-			neighbors.append(Vector2i(pos.x, pos.y+1))
-			#neighbors.append(Vector2i(pos.x+1, pos.y+1))
-			#neighbors.append(Vector2i(pos.x-1, pos.y-1))
-			neighbors.append(Vector2i(pos.x, pos.y-1))
-			#neighbors.append(Vector2i(pos.x+1, pos.y-1))
+	
+	for v in [Vector2i(pos.x+1, pos.y), Vector2i(pos.x-1, pos.y), Vector2i(pos.x, pos.y+1), Vector2i(pos.x, pos.y-1),]:
+		if 0 <= v.x && v.x <= goban_size-1 && 0 <= v.y && v.y <= goban_size-1:
+			neighbors.push_back(v)
 	return neighbors
 	
 var same_team_neighbors = []
