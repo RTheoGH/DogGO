@@ -13,10 +13,12 @@ func _on_pressed() -> void:
 		if board.try_take(grid_position):
 			Gamemaster.current_player._finish_turn()
 	
-func activate(player:Player) -> void:
+func activate(player:Player = null) -> void:
 	disabled = true
-	
-	if player.team == "x":
+	if player == null:
+		$Node2D/X.hide()
+		$Node2D/O.hide()
+	elif player.team == "x":
 		$Node2D/X.show()
 		$Node2D/O.hide()
 	else:

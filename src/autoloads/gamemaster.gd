@@ -34,6 +34,6 @@ func next_turn():
 	current_player_index = (current_player_index+1) % players.size()
 	current_player = players[current_player_index]
 
-func win():
+func win(player: Player):
 	game_on = false
-	print("WINNER: ", current_player.team)
+	print("WINNER: ", player.team)
