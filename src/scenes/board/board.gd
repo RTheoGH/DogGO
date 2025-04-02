@@ -249,3 +249,7 @@ func check_win_condition(pos:Vector2i):
 		#else: break
 	#if count >= winning_length:
 		#Gamemaster.win()
+
+
+func _on_pass_pressed() -> void:
+	$Text.show_pass()

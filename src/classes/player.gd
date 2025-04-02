@@ -39,6 +39,7 @@ func play_random(board):
 				randi_range(0, board.map_size.y-1),
 			)
 		)):
+			
 			Gamemaster.current_player._finish_turn()
 			return
 	print("PAS TROUVE D'EMPLACEMENT")

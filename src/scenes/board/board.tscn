@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4ei8rii3s46p"]
+[gd_scene load_steps=7 format=3 uid="uid://b4ei8rii3s46p"]
 
 [ext_resource type="Script" path="res://src/scenes/board/board.gd" id="1_uoraa"]
 [ext_resource type="Script" path="res://src/classes/player.gd" id="2_6ai7i"]
-[ext_resource type="Texture2D" uid="uid://dpodbwcr5qfis" path="res://resources/images/pawpatrol.png" id="3_swugr"]
+[ext_resource type="Texture2D" uid="uid://dvd8mra4bmxvk" path="res://resources/images/pawpatrol11.png" id="3_3egi6"]
+[ext_resource type="PackedScene" uid="uid://b2ve3jbgajvf7" path="res://src/scenes/Text/text.tscn" id="4_n5b7x"]
 
 [sub_resource type="Resource" id="Resource_sal3q"]
 script = ExtResource("2_6ai7i")
@@ -40,8 +41,24 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
+[node name="Button" type="Button" parent="."]
+offset_left = 831.0
+offset_top = 959.0
+offset_right = 1041.0
+offset_bottom = 1051.0
+text = "Pass"
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -5
+texture_filter = 1
 position = Vector2(939, 540.25)
 scale = Vector2(1.26913, 1.17983)
-texture = ExtResource("3_swugr")
+texture = ExtResource("3_3egi6")
+
+[node name="Text" parent="." instance=ExtResource("4_n5b7x")]
+position = Vector2(358, 143)
+
+[node name="Text2" parent="." instance=ExtResource("4_n5b7x")]
+position = Vector2(1414, 159)
+
+[connection signal="pressed" from="Button" to="." method="_on_pass_pressed"]
