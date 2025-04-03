@@ -82,7 +82,7 @@ func try_take(pos:Vector2i, try:bool = false) -> bool:
 			var v := surrounded_iter(n, other_player.team, surrounded_list)
 			if v:
 				if !try:
-					clear_all(surrounded_list)
+					await clear_all(surrounded_list)
 		if !try:
 			check_win_condition(pos)
 		return true
@@ -151,13 +151,13 @@ func preview():
 func check_can_play() -> bool:
 	for i in map_size.x:
 		for j in map_size.y:
-			if try_take(Vector2i(i, j), true):
+			if await try_take(Vector2i(i, j), true):
 				return true
 	return false
  
 func check_win_condition(pos:Vector2i):
 	var skip_turn = false # à faire : si les deux joueurs skippent leur tour
-	if((player_1.nb_pierres == 0 and player_2.nb_pierres == 0) or skip_turn or !check_can_play()):
+	if((player_1.nb_pierres == 0 and player_2.nb_pierres == 0) or skip_turn or !(await check_can_play())):
 		var nb_pierre_1 = 0
 		var nb_pierre_2 = 0
 		for i in map_size.x:

@@ -39,3 +39,9 @@ func next_turn():
 func win(player: Player):
 	game_on = false
 	print("WINNER: ", player.team)
+
+func restart_with_same_settings():
+	get_tree().change_scene_to_packed(preload("res://src/scenes/board/board.tscn"))
+
+func to_menu():
+	get_tree().change_scene_to_packed(preload("res://src/scenes/UI/Main Menu.tscn"))

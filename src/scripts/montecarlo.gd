@@ -85,7 +85,7 @@ func montecarlo(board:Array):
 		
 		#if win_condition(newboard, move, team) >= winning_length: return move
 		
-		var res = minmax_rec(newboard, max_depth, false, move)
+		var res = montecarlo_rec(newboard, max_depth, false, move)
 		if res > value:
 			value = res
 			best_move = move
@@ -93,47 +93,9 @@ func montecarlo(board:Array):
 	print ("playing ", best_move, " with value ", value, " (decided in ",Time.get_ticks_msec() - time, "ms).")
 	return best_move #Vector2i(best_move.y, best_move.x)
 
-func minmax_rec(board:Array, depth:int, my_turn:bool, last_move:Vector2i):
-	if depth <= 0:
-		return heuristic(board)
+func montecarlo_rec(board:Array, depth:int, my_turn:bool, last_move:Vector2i):
+	pass
 
-	if my_turn && win_condition(board, last_move, adversary) >= winning_length:
-		#printboard(newboard)
-		return -88888
-
-	if !my_turn && win_condition(board, last_move, team) >= winning_length:
-		#printboard(newboard)
-		return 88888
-
-	var value:float
-	if my_turn:
-		value = -99999
-		var moves:Array = get_all_moves(board, team)
-		#print("\t".repeat(max_depth - depth), "| DEPTH ", depth)
-		if moves.is_empty(): return heuristic(board)
-		for move in moves:
-			
-			var newboard :Array = getModifiedBoard(board, team, move)
-			
-			#if win_condition(newboard, move, team) >= winning_length: return 88888
-			value = max(value, minmax_rec(newboard, depth-1, false, move))
-			#print("\t".repeat(max_depth - depth), "| ",value)
-			
-	else:
-		value = 99999
-		var moves:Array = get_all_moves(board, adversary)
-		if moves.is_empty(): return heuristic(board)
-		#print("\t".repeat(max_depth - depth), "| DEPTH ", depth)
-		for move in moves:
-			var newboard :Array = getModifiedBoard(board, adversary, move)
-			
-			#if win_condition(newboard, move, adversary) >= winning_length: return -88888
-			
-			value = min(value, minmax_rec(newboard, depth-1, true, move))
-	#print("\t".repeat(max_depth - depth), "| ",value)
-	return value
-	
-# returns the closest to get to the solution. If win_condition returns >winning_length, it's a win.
 func win_condition(grid, pos:Vector2i, team:String):
 	# lines
 	var global_count := 0
