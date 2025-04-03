@@ -36,6 +36,8 @@ class Square:
 var grid:Array[Array] #[[Square]]
 
 func _ready() -> void:
+	$new.hide()
+	$exit.hide()
 	Gamemaster.players.append(player_1)
 	Gamemaster.players.append(player_2)
 	Gamemaster.board_node = self
@@ -168,6 +170,7 @@ func check_win_condition(pos:Vector2i):
 					nb_pierre_2 += 1
 		var winner = player_1 if nb_pierre_1 > nb_pierre_2 else player_2
 		Gamemaster.win(winner)
+		$exit.show()
 	## lines
 	#var count := 1
 	#for i in range(1, winning_length):
@@ -236,3 +239,11 @@ func _on_pass_pressed() -> void:
 	else:
 		$Text2.show_pass()
 	Gamemaster.current_player._finish_turn()
+
+
+func _on_exit_pressed() -> void:
+	get_tree().quit()
+
+
+func _on_new_pressed() -> void:
+	pass
