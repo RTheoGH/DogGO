@@ -13,6 +13,8 @@ enum HEURISTICS {DUMB}
 
 @export_enum("o", "x") var team := "o"
 
+var montecarlo = preload("res://src/scripts/montecarlo.gd").new()
+
 func _play(board):
 	var heuristic_fun:Callable;
 	match heuristic:
