@@ -230,4 +230,9 @@ func check_win_condition(pos:Vector2i):
 
 
 func _on_pass_pressed() -> void:
-	$Text.show_pass()
+	var tour = Gamemaster.current_player.team
+	if tour == "O":
+		$Text.show_pass()
+	else:
+		$Text2.show_pass()
+	Gamemaster.current_player._finish_turn()
