@@ -16,10 +16,14 @@ offset_bottom = 41.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 z_index = 5
-offset_left = 1.0
-offset_right = 130.0
-offset_bottom = 40.0
+offset_left = 33.0
+offset_top = 11.0
+offset_right = 162.0
+offset_bottom = 51.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("2_s63r1")
+theme_override_font_sizes/normal_font_size = 36
 text = "Pass !"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
