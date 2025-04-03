@@ -6,7 +6,8 @@ var adversary:String
 var winning_length:int
 var board_size:Vector2i
 
-var max_width := 30
+var max_test := 30
+var max_width := 5
 var max_depth := 4
 
 func play(team:String, adversary:String, board_size:Vector2i, board:Array):
@@ -70,31 +71,64 @@ func heuristic(board):
 	
 	return max_win_score_team #- max_win_score_adversary
 
-#only the first depth needs to kep track of the move
+func choose_moves(n:int, moves:Array[Vector2i], board:Array, team:String):
+	var res:Array[Vector2i] = []
+	for i in min(n , moves.size()):
+		res.append(moves.pop_at(randi_range(0, moves.size())))
+		
+	return res
+
+func getHeuristicSortedList(moves:Array[Vector2i], board:Array, team:String):
+	var heuristics:Array[float] = []
+	for move in moves: heuristics.append(heuristic(move))
+
 func montecarlo(board:Array):
 	var time:int = Time.get_ticks_msec()
-	var value:float
+	
+	var value:float = -99999999
 	var best_move:Vector2i = Vector2i(-1, -1)
 	#printboard((board))
 	
-	value = -99999
 	var moves:Array = get_all_moves(board, team)
 	if moves.is_empty(): return best_move
-	for move in moves:
+	
+	var to_try = choose_moves(max_test, moves, board, team)
+	
+	for move in to_try:
 		var newboard :Array = getModifiedBoard(board, team, move)
-		
-		#if win_condition(newboard, move, team) >= winning_length: return move
 		
 		var res = montecarlo_rec(newboard, max_depth, false, move)
 		if res > value:
 			value = res
 			best_move = move
-		#print("| ",value)
 	print ("playing ", best_move, " with value ", value, " (decided in ",Time.get_ticks_msec() - time, "ms).")
-	return best_move #Vector2i(best_move.y, best_move.x)
+	return best_move
 
 func montecarlo_rec(board:Array, depth:int, my_turn:bool, last_move:Vector2i):
-	pass
+	var best_move:Vector2i = Vector2i(-1, -1)
+	var value:float = -9999.0
+	var moves:Array = get_all_moves(board, team)
+	if moves.is_empty(): return best_move
+	
+	var to_try = choose_moves(max_test, moves, board, team)
+	
+	if my_turn:
+		for move in to_try:
+			var newboard :Array = getModifiedBoard(board, team, move)
+			
+			var res = montecarlo_rec(newboard, max_depth, false, move)
+			if res > value:
+				value = res
+				best_move = move
+	else:
+		for move in to_try:
+			var newboard :Array = getModifiedBoard(board, team, move)
+			
+			var res = montecarlo_rec(newboard, max_depth, true, move)
+			if res > value:
+				value = res
+				best_move = move
+	
 
 func win_condition(grid, pos:Vector2i, team:String):
 	# lines
