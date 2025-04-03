@@ -41,7 +41,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="Button" type="Button" parent="."]
+[node name="pass" type="Button" parent="."]
 offset_left = 831.0
 offset_top = 959.0
 offset_right = 1041.0
@@ -61,4 +61,20 @@ position = Vector2(358, 143)
 [node name="Text2" parent="." instance=ExtResource("4_n5b7x")]
 position = Vector2(1414, 159)
 
-[connection signal="pressed" from="Button" to="." method="_on_pass_pressed"]
+[node name="new" type="Button" parent="."]
+offset_left = 821.0
+offset_top = 420.0
+offset_right = 1055.0
+offset_bottom = 485.0
+text = "Another round !"
+
+[node name="exit" type="Button" parent="."]
+offset_left = 819.0
+offset_top = 507.0
+offset_right = 1057.0
+offset_bottom = 571.0
+text = "Exit"
+
+[connection signal="pressed" from="pass" to="." method="_on_pass_pressed"]
+[connection signal="pressed" from="new" to="." method="_on_new_pressed"]
+[connection signal="pressed" from="exit" to="." method="_on_exit_pressed"]
