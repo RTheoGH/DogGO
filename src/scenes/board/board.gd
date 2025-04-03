@@ -171,6 +171,7 @@ func check_win_condition(pos:Vector2i):
 		var winner = player_1 if nb_pierre_1 > nb_pierre_2 else player_2
 		Gamemaster.win(winner)
 		$exit.show()
+		$new.show()
 	## lines
 	#var count := 1
 	#for i in range(1, winning_length):
@@ -246,4 +247,4 @@ func _on_exit_pressed() -> void:
 
 
 func _on_new_pressed() -> void:
-	pass
+	Gamemaster.restart_with_same_settings()
