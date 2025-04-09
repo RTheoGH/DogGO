@@ -37,6 +37,7 @@ animations = [{
 }]
 
 [node name="square" type="Button"]
+z_index = 1
 custom_minimum_size = Vector2(50, 50)
 anchors_preset = -1
 anchor_right = 0.026
@@ -47,6 +48,7 @@ flat = true
 script = ExtResource("1_jrr86")
 
 [node name="Node2D" type="Node2D" parent="."]
+z_index = 5
 
 [node name="O" type="AnimatedSprite2D" parent="Node2D"]
 visible = false

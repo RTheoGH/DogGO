@@ -172,6 +172,7 @@ func check_win_condition(pos:Vector2i):
 		Gamemaster.win(winner)
 		$exit.show()
 		$new.show()
+		#$squares.hide()
 	## lines
 	#var count := 1
 	#for i in range(1, winning_length):
@@ -248,3 +249,4 @@ func _on_exit_pressed() -> void:
 
 func _on_new_pressed() -> void:
 	Gamemaster.restart_with_same_settings()
+	#$squares.show()
