@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b4ei8rii3s46p"]
+[gd_scene load_steps=12 format=3 uid="uid://b4ei8rii3s46p"]
 
 [ext_resource type="Script" path="res://src/scenes/board/board.gd" id="1_uoraa"]
 [ext_resource type="Script" path="res://src/classes/player.gd" id="2_6ai7i"]
@@ -23,6 +23,17 @@ ai_mode = 1
 heuristic = 0
 nb_pierres = 25
 team = "o"
+
+[sub_resource type="Gradient" id="Gradient_odbm8"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.202381, 1)
+colors = PackedColorArray(0, 0, 0, 0.729412, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3vqss"]
+gradient = SubResource("Gradient_odbm8")
+fill = 1
+fill_from = Vector2(0.5, 0.547414)
+fill_to = Vector2(1, 0.568965)
 
 [node name="board" type="Node2D"]
 script = ExtResource("1_uoraa")
@@ -103,10 +114,17 @@ offset_bottom = 40.0
 position = Vector2(192, 374)
 
 [node name="Chase_sprite" type="Sprite2D" parent="Chase"]
+z_index = 1
 texture_filter = 1
 position = Vector2(39, -93)
 scale = Vector2(2.54081, 2.36203)
 texture = ExtResource("3_s857l")
+
+[node name="Sprite2D" type="Sprite2D" parent="Chase/Chase_sprite"]
+z_as_relative = false
+position = Vector2(-0.393576, 4.65701)
+scale = Vector2(1.45746, 1.27671)
+texture = SubResource("GradientTexture2D_3vqss")
 
 [node name="Text" parent="Chase" instance=ExtResource("4_n5b7x")]
 position = Vector2(78, -240)
@@ -163,6 +181,13 @@ texture_filter = 1
 position = Vector2(28, -100)
 scale = Vector2(3.09127, 3.09127)
 texture = ExtResource("4_if2mg")
+
+[node name="Sprite2D" type="Sprite2D" parent="Marshall/Marshall_sprite"]
+z_index = -1
+z_as_relative = false
+position = Vector2(-0.485244, 9.1732)
+scale = Vector2(1.1676, 0.903318)
+texture = SubResource("GradientTexture2D_3vqss")
 
 [node name="Text" parent="Marshall" instance=ExtResource("4_n5b7x")]
 position = Vector2(-132, -235)
@@ -228,6 +253,13 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("6_hjuy0")
 theme_override_font_sizes/normal_font_size = 76
 bbcode_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="win"]
+z_index = -1
+z_as_relative = false
+position = Vector2(170, 59)
+scale = Vector2(7.46925, 5.92969)
+texture = SubResource("GradientTexture2D_3vqss")
 
 [connection signal="pressed" from="pass" to="." method="_on_pass_pressed"]
 [connection signal="pressed" from="show_board" to="." method="_on_show_board_pressed"]
