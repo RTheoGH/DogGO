@@ -1,8 +1,40 @@
 extends Control
+var player_selection  = ["User", "Random", "Montecarlo"]
+var bsize = [7, 14]
 
 func _ready() -> void:
 	print("hello")
 
+
 func _on_launch_pressed() -> void:
 	pass # Replace with function body.
+	var player1 = Player.new()
+	var player2 = Player.new()
+	
+	player1.team = "o"
+	player2.team = "x"
+	
+
+	player1.ai_mode = $Player1Selection.selected
+	player2.ai_mode = $Player2Selecton.selected
+	
+	Gamemaster.players = [player1, player2]
 	get_tree().change_scene_to_packed(preload("res://src/scenes/board/board.tscn"))
+
+
+func _on_select_player_item_selected(index: int) -> void:
+	pass # Replace with function body.
+	
+	print(player_selection[index])
+
+
+func _on_back_pressed() -> void:
+	pass # Replace with function body.
+	get_tree().change_scene_to_packed(preload("res://src/scenes/UI/MainMenu.tscn"))
+	print("back")
+
+
+func _on_board_size_item_selected(index: int) -> void:
+	pass # Replace with function body.
+	Gamemaster.boardsize = bsize[index]
+	print("board size ", bsize[index])

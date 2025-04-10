@@ -42,14 +42,14 @@ text = "Back"
 [node name="BoardSize" type="OptionButton" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.482
-anchor_top = 0.281
-anchor_right = 0.607
-anchor_bottom = 0.344
-offset_left = -0.440063
-offset_top = 0.519989
-offset_right = -0.440063
-offset_bottom = 0.47998
+anchor_left = 0.414
+anchor_top = 0.511
+anchor_right = 0.539
+anchor_bottom = 0.574
+offset_left = -0.880066
+offset_top = 4.11993
+offset_right = -0.880127
+offset_bottom = 4.08002
 alignment = 1
 selected = 0
 item_count = 2
@@ -60,36 +60,39 @@ popup/item_1/id = 1
 [node name="Label" type="Label" parent="BoardSize"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = -0.843
-anchor_right = 1.0
-anchor_bottom = 0.314
-offset_left = 28.0
-offset_top = 10.324
-offset_right = -13.0
-offset_bottom = -3.352
+anchor_left = 0.108
+anchor_top = -1.0
+anchor_right = 0.937
+anchor_bottom = -0.044
+offset_left = 0.0800056
+offset_top = 3.05176e-05
+offset_right = 0.11998
+offset_bottom = -0.00796795
 theme_override_font_sizes/font_size = 22
 text = "Select Board Size:
 "
 horizontal_alignment = 1
 
-[node name="SelectPlayer" type="OptionButton" parent="."]
+[node name="Player1Selection" type="OptionButton" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.115
+anchor_left = 0.231
 anchor_top = 0.278
-anchor_right = 0.369
-anchor_bottom = 0.342
-offset_left = 0.199997
-offset_top = -0.240021
-offset_right = 0.519958
-offset_bottom = -0.360016
+anchor_right = 0.435
+anchor_bottom = 0.345
+offset_left = 0.47998
+offset_top = 3.76001
+offset_right = 0.799927
+offset_bottom = 0.399963
 selected = 0
-item_count = 2
-popup/item_0/text = "Player 1"
-popup/item_1/text = "Player 2"
+item_count = 3
+popup/item_0/text = "User"
+popup/item_1/text = "Random"
 popup/item_1/id = 1
+popup/item_2/text = "Montecarlo"
+popup/item_2/id = 2
 
-[node name="Label2" type="Label" parent="SelectPlayer"]
+[node name="Player1Label" type="Label" parent="Player1Selection"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.037
@@ -100,7 +103,7 @@ offset_top = -0.00499725
 offset_right = 0.0319824
 offset_bottom = -14.0
 theme_override_font_sizes/font_size = 22
-text = "Select Player:"
+text = "Player 1:"
 horizontal_alignment = 1
 
 [node name="Launch" type="Button" parent="."]
@@ -116,4 +119,40 @@ offset_right = -0.280029
 theme_override_font_sizes/font_size = 32
 text = "Launch"
 
+[node name="Player2Selecton" type="OptionButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.527
+anchor_top = 0.269
+anchor_right = 0.737
+anchor_bottom = 0.345
+offset_left = 0.159973
+offset_top = 11.48
+offset_right = -0.0400391
+offset_bottom = 0.399963
+selected = 0
+item_count = 3
+popup/item_0/text = "User"
+popup/item_1/text = "Random"
+popup/item_1/id = 1
+popup/item_2/text = "Montecarlo"
+popup/item_2/id = 2
+
+[node name="Player2Label" type="Label" parent="Player2Selecton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.072
+anchor_top = -0.72
+anchor_right = 0.979
+anchor_bottom = -0.107
+offset_right = -0.125
+offset_bottom = 0.0250006
+theme_override_font_sizes/font_size = 22
+text = "Player 2:"
+horizontal_alignment = 1
+clip_text = true
+
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+[connection signal="item_selected" from="BoardSize" to="." method="_on_board_size_item_selected"]
+[connection signal="item_selected" from="Player1Selection" to="." method="_on_select_player_item_selected"]
 [connection signal="pressed" from="Launch" to="." method="_on_launch_pressed"]
