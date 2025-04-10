@@ -123,30 +123,32 @@ func take(pos:Vector2i):
 			if n not in pos_deg_liberte[curr_team][curr_id]:
 				pos_deg_liberte[curr_team][curr_id].append(n)
 	
-		elif n_team == curr_team:
+		elif (n_team == curr_team) && (n_id != curr_id):
 			
 			for j in pos_deg_liberte[curr_team][n_id]:
-					if (j != pos) and (j not in pos_deg_liberte[curr_team][ current_id[curr_team] ]):
+					if (j != pos) and (j not in pos_deg_liberte[curr_team][ curr_id ]):
 						pos_deg_liberte[curr_team][ current_id[curr_team] ].append(j)
 			
-			for g in groups[n_team][n_id]:
-				grid[g.x][g.y].group_id = grid[pos.x][pos.y].group_id
-				groups[curr_team][grid[pos.x][pos.y].group_id].append(g)
-			groups[n_team].erase(n_id)
-			pos_deg_liberte[n_team].erase(n_id)
+			for g in groups[curr_team][n_id]:
+				grid[g.x][g.y].group_id = curr_id
+				groups[curr_team][curr_id].append(g)
+			groups[curr_team].erase(n_id)
+			pos_deg_liberte[curr_team].erase(n_id)
 			
 		else:
 			pos_deg_liberte[n_team][n_id].erase(pos)
 			if pos_deg_liberte[n_team][n_id].is_empty():
 				await clear_all(n_team, n_id)
 				pos_deg_liberte[n_team].erase(n_id)
+				
+			
 	current_id[curr_team] += 1
 	print("les tailels en o: ")
 	for i in pos_deg_liberte["o"].keys():
-		print(i, " ", pos_deg_liberte["o"][i].size())
+		print(i, " ", pos_deg_liberte["o"][i].size(), " ", pos_deg_liberte["o"][i])
 	print("les tailles en x: ")
 	for i in pos_deg_liberte["x"].keys():
-		print(i, " ", pos_deg_liberte["x"][i].size())
+		print(i, " ", pos_deg_liberte["x"][i].size(), " ", pos_deg_liberte["x"][i])
 
 func get_neighbors(pos:Vector2i):
 	var neighbors = []

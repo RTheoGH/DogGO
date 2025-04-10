@@ -30,7 +30,7 @@ func _on_select_player_item_selected(index: int) -> void:
 
 func _on_back_pressed() -> void:
 	pass # Replace with function body.
-	get_tree().change_scene_to_packed(preload("res://src/scenes/UI/MainMenu.tscn"))
+	get_tree().change_scene_to_packed(preload("res://src/scenes/UI/mainmenue.tscn"))
 	print("back")
 
 
