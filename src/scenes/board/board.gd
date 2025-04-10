@@ -189,7 +189,7 @@ func preview():
 func check_can_play() -> bool:
 	for i in map_size.x:
 		for j in map_size.y:
-			if await try_take(Vector2i(i, j), true):
+			if await try_take(Vector2i(i, j)):
 				return true
 	return false
  
