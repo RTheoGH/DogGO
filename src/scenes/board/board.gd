@@ -41,7 +41,7 @@ var grid:Array[Array] #[[Square]]
 
 func _ready() -> void:
 	$new.hide()
-	$exit.hide()
+	#$exit.hide()
 	$win.hide()
 	$show_board.hide()
 	$squares.show()
@@ -112,6 +112,7 @@ func take(pos:Vector2i):
 	groups[curr_team][ curr_id ] = [pos]
 	
 	update_nb_pions_placed()
+	$Woof.play()
 	
 	var enemy_groups_surrounded := []
 	for n in get_neighbors(pos):
@@ -237,7 +238,7 @@ func announce_winner():
 		text = "[center]Match nul !"
 	$win/win_text.text = text
 	$win.show()
-	$exit.show()
+	#$exit.show()
 	$new.show()
 	$show_board.show()
 
@@ -270,3 +271,16 @@ func show_turn_message():
 		$turn/turn_text.text = "[center]C'est au tour de [color=red]Marshall[color=black] de jouer"
 	else:
 		$turn/turn_text.text = "Erreur tour"
+
+
+func _on_pass_mouse_entered() -> void:
+	$Menu.play()
+
+func _on_new_mouse_entered() -> void:
+	$Menu.play()
+
+func _on_exit_mouse_entered() -> void:
+	$Menu.play()
+
+func _on_show_board_mouse_entered() -> void:
+	$Menu.play()

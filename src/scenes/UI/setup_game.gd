@@ -38,3 +38,18 @@ func _on_board_size_item_selected(index: int) -> void:
 	pass # Replace with function body.
 	Gamemaster.boardsize = bsize[index]
 	print("board size ", bsize[index])
+
+func _on_back_mouse_entered() -> void:
+	$Menu.play()
+
+func _on_launch_mouse_entered() -> void:
+	$Menu.play()
+
+func _on_player_1_selection_mouse_entered() -> void:
+	$Menu.play()
+
+func _on_player_2_selection_mouse_entered() -> void:
+	$Menu.play()
+
+func _on_board_size_mouse_entered() -> void:
+	$Menu.play()
