@@ -69,36 +69,21 @@ func clear_all(team:String, group_id:int):
 	await get_tree().create_timer(0.2).timeout
 	for p in groups[team][group_id]:
 		await get_tree().create_timer(0.15).timeout
+		
+		for n in get_neighbors(p):
+			var n_team:String = grid[n.x][n.y].team
+			var n_id:int = grid[n.x][n.y].group_id
+			
+			if n_team != "NEUTRAL":
+				pos_deg_liberte[n_team][n_id].append(p)
+		
 		grid[p.x][p.y].clear()
 		print(p, "  TAKEN")
+		
+		
+		
 	groups[team].erase(group_id)
 	pos_deg_liberte[team].erase(group_id)
-
-#func try_take(pos:Vector2i, try:bool = false) -> bool:
-	#for n in get_neighbors(pos):
-		#print(n)
-	#var surrounded_list:Array = []
-	#if grid[pos.x][pos.y].is_free():
-		#var other_player:Player = Gamemaster.players[(Gamemaster.current_player_index+1)%2]
-		#
-		#if !surrounded_iter(pos, Gamemaster.current_player.team, surrounded_list):
-			#if !try:
-				#grid[pos.x][pos.y].take(Gamemaster.current_player)
-		#else:
-			#return false
-		#
-		#for n in get_neighbors(pos):
-			#if grid[n .x][n .y].team == "NEUTRAL": continue
-			#if grid[n.x][n.y].team == Gamemaster.current_player.team: continue
-			#surrounded_list = []
-			#var v := surrounded_iter(n, other_player.team, surrounded_list)
-			#if v:
-				#if !try:
-					#clear_all(surrounded_list)
-		#if !try:
-			#check_win_condition(pos)
-		#return true
-	#return false
 
 func try_take(pos:Vector2i) -> bool:
 	if grid[pos.x][pos.y].team != "NEUTRAL": return false
@@ -106,6 +91,9 @@ func try_take(pos:Vector2i) -> bool:
 		if grid[n.x][n.y].team == "NEUTRAL":
 			print("yes")
 			return true
+		elif grid[n.x][n.y].team == Gamemaster.current_player.team && (pos_deg_liberte[Gamemaster.current_player.team][grid[n.x][n.y].group_id].size() > 1):
+			return true
+			
 			
 		elif grid[n.x][n.y].team != Gamemaster.current_player.team:
 			
@@ -145,10 +133,10 @@ func take(pos:Vector2i):
 				groups[curr_team][grid[pos.x][pos.y].group_id].append(g)
 			groups[n_team].erase(n_id)
 		else:
-			pos_deg_liberte[n_team][n_id].erase(n)
-			print("DEGS ", pos_deg_liberte[n_team][n_id])
+			pos_deg_liberte[n_team][n_id].erase(pos)
 			if pos_deg_liberte[n_team][n_id].is_empty():
 				clear_all(n_team, n_id)
+				
 	current_id[curr_team] += 1
 	
 	
@@ -194,67 +182,6 @@ func check_win_condition(pos:Vector2i):
 		var winner = player_1 if nb_pierre_1 > nb_pierre_2 else player_2
 		Gamemaster.win(winner)
 		announce_winner()
-		#$squares.hide()
-	## lines
-	#var count := 1
-	#for i in range(1, winning_length):
-		#if pos.x+i >= map_size.x: break
-		#if grid[pos.x+i][pos.y].is_mine():
-			#count+=1
-		#else: break
-	#for i in range(1, winning_length):
-		#if pos.x-i < 0: break
-		#if grid[pos.x-i][pos.y].is_mine():
-			#count+=1
-		#else: break
-	#if count >= winning_length:
-		#Gamemaster.win()
-		#
-	## columns
-	#count = 1
-	#for i in range(1, winning_length):
-		#if pos.y+i >= map_size.y: break
-		#if grid[pos.x][pos.y+i].is_mine():
-			#count+=1
-		#else: break
-	#for i in range(1, winning_length):
-		#if pos.y-i < 0: break
-		#if grid[pos.x][pos.y-i].is_mine():
-			#count+=1
-		#else: break
-	#if count >= winning_length:
-		#Gamemaster.win()
-	#
-	## diag " / "
-	#count = 1
-	#for i in range(1, winning_length):
-		#if pos.y+i >= map_size.y or pos.x+i >= map_size.x: break
-		#if grid[pos.x+i][pos.y+i].is_mine():
-			#count+=1
-		#else: break
-	#for i in range(1, winning_length):
-		#if pos.y-i <0 or pos.x-i < 0: break
-		#if grid[pos.x-i][pos.y-i].is_mine():
-			#count+=1
-		#else: break
-	#if count >= winning_length:
-		#Gamemaster.win()
-	#
-		## diag " \ "
-	#count = 1
-	#for i in range(1, winning_length):
-		#if pos.y+i >= map_size.y or pos.x-i <0: break
-		#if grid[pos.x-i][pos.y+i].is_mine():
-			#count+=1
-		#else: break
-	#for i in range(1, winning_length):
-		#if pos.y-i <0 or pos.x+i >= map_size.x: break
-		#if grid[pos.x+i][pos.y-i].is_mine():
-			#count+=1
-		#else: break
-	#if count >= winning_length:
-		#Gamemaster.win()
-
 
 func _on_pass_pressed() -> void:
 	var tour = Gamemaster.current_player.team
