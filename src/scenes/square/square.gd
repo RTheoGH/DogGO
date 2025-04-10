@@ -2,6 +2,10 @@ extends Button
 
 var board:Node2D
 var grid_position:Vector2i
+var scale_factor := 1.0
+var base_pos:Vector2
+func _ready() -> void:
+	_on_minimum_size_changed()
 
 func _on_pressed() -> void:
 	if Gamemaster.current_player != null:
@@ -10,7 +14,8 @@ func _on_pressed() -> void:
 			print("Player tried to play when it wasn't a player's turn")
 			return
 		
-		if await board.try_take(grid_position):
+		if board.try_take(grid_position):
+			await board.take(grid_position)
 			Gamemaster.current_player._finish_turn()
 	
 func activate(player:Player = null) -> void:
@@ -35,7 +40,7 @@ func animate():
 	tween.tween_property(
 		$Node2D,
 		"position",
-		Vector2(0, 0),
+		base_pos,
 		0.4
 		).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	tween.parallel()
@@ -70,10 +75,12 @@ func clear():
 
 func _on_minimum_size_changed() -> void:
 	$Node2D.scale = Vector2.ONE * 0.5 * (custom_minimum_size.y / 50.0)
-	$Node2D.position = custom_minimum_size/2.0
+	base_pos = custom_minimum_size/2.0
+	
 
 func _draw():
-	draw_rect(Rect2(0.0,0.0,140.0,140.0),Color.ANTIQUE_WHITE)
-	draw_line(Vector2(60,0),Vector2(60,140),Color.BLACK,5.0)
-	draw_line(Vector2(0,60),Vector2(140,60),Color.BLACK,5.0)
+	var couleur = Color(1.0,1.0,1.0,0.25)
+	draw_rect(Rect2(0.0,0.0,129.0,129.0),couleur)
+	draw_line(Vector2(60,0),Vector2(60,129),Color.BLACK,5.0)
+	draw_line(Vector2(0,60),Vector2(129,60),Color.BLACK,5.0)
 	#draw_rect(Rect2(10.0, 10.0, 100.0, 100.0), Color.RED)

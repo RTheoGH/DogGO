@@ -73,22 +73,7 @@ func get_all_moves(board:Array, team:String):
 	return res
 
 func heuristic(board):
-	var max_win_score_team := 0
-	var max_win_score_adversary := 0
-	for i in board_size.x:
-		for j in board_size.y:
-			var team:String = board[i][j]
-			
-			var win_score:int = win_condition(board, Vector2i(i, j), team)
-			if team == self.team:
-				max_win_score_team = max(win_score, max_win_score_team)
-			else:
-				max_win_score_adversary = max(win_score, max_win_score_adversary)
-	
-	if (max_win_score_team) >= winning_length: return 77777
-	if (max_win_score_adversary) >= winning_length: return -77777
-	
-	return max_win_score_team #- max_win_score_adversary
+	return 2
 
 func choose_moves(n:int, moves:Array[Vector2i], board:Array, team:String):
 	var res:Array[Vector2i] = []
@@ -149,143 +134,9 @@ func montecarlo_rec(board:Array, depth:int, my_turn:bool, last_move:Vector2i):
 				best_move = move
 	
 
-func win_condition(grid, pos:Vector2i, team:String):
-	# lines
-	var global_count := 0
-	var count := 1
-	for i in range(1, winning_length):
-		if pos.x+i >= board_size.x: break
-		if grid[pos.x+i][pos.y] == team:
-			count+=1
-		else: break
-	for i in range(1, winning_length):
-		if pos.x-i < 0: break
-		if grid[pos.x-i][pos.y] == team:
-			count+=1
-		else: break
-	
-	
-	if count >= winning_length:
-		return winning_length
-	global_count = max(global_count, count)
-	# columns
-	count = 1
-	for i in range(1, winning_length):
-		if pos.y+i >= board_size.y: break
-		if grid[pos.x][pos.y+i] == team:
-			count+=1
-		else: break
-	for i in range(1, winning_length):
-		if pos.y-i < 0: break
-		if grid[pos.x][pos.y-i] == team:
-			count+=1
-		else: break
-	if count >= winning_length:
-		return winning_length
-	global_count = max(global_count, count)
-	
-	# diag " / "
-	count = 1
-	for i in range(1, winning_length):
-		if pos.y+i >= board_size.y or pos.x+i >= board_size.x: break
-		if grid[pos.x+i][pos.y+i] == team:
-			count+=1
-		else: break
-	for i in range(1, winning_length):
-		if pos.y-i <0 or pos.x-i < 0: break
-		if grid[pos.x-i][pos.y-i] == team:
-			count+=1
-		else: break
-	if count >= winning_length:
-		return winning_length
-	global_count = max(global_count, count)
-	
-		# diag " \ "
-	count = 1
-	for i in range(1, winning_length):
-		if pos.y+i >= board_size.y or pos.x-i <0: break
-		if grid[pos.x-i][pos.y+i] == team:
-			count+=1
-		else: break
-	for i in range(1, winning_length):
-		if pos.y-i <0 or pos.x+i >= board_size.x: break
-		if grid[pos.x+i][pos.y-i] == team:
-			count+=1
-		else: break
-	if count >= winning_length:
-		return winning_length
-	global_count = max(global_count, count)
-	
-	return global_count
-
 func win_possibility(grid, pos:Vector2i, team:String):
 	# lines
-	var global_count := 0
-	var count := 1
-	for i in range(1, winning_length):
-		if pos.x+i >= board_size.x: break
-		if grid[pos.x+i][pos.y] in [team, "NEUTRAL"]:
-			count+=1
-		else: break
-	for i in range(1, winning_length):
-		if pos.x-i < 0: break
-		if grid[pos.x-i][pos.y] in [team, "NEUTRAL"]:
-			count+=1
-		else: break
-	
-	
-	if count >= winning_length:
-		return winning_length
-	global_count = max(global_count, count)
-	# columns
-	count = 1
-	for i in range(1, winning_length):
-		if pos.y+i >= board_size.y: break
-		if grid[pos.x][pos.y+i] in [team, "NEUTRAL"]:
-			count+=1
-		else: break
-	for i in range(1, winning_length):
-		if pos.y-i < 0: break
-		if grid[pos.x][pos.y-i] in [team, "NEUTRAL"]:
-			count+=1
-		else: break
-	if count >= winning_length:
-		return winning_length
-	global_count = max(global_count, count)
-	
-	# diag " / "
-	count = 1
-	for i in range(1, winning_length):
-		if pos.y+i >= board_size.y or pos.x+i >= board_size.x: break
-		if grid[pos.x+i][pos.y+i] in [team, "NEUTRAL"]:
-			count+=1
-		else: break
-	for i in range(1, winning_length):
-		if pos.y-i <0 or pos.x-i < 0: break
-		if grid[pos.x-i][pos.y-i] in [team, "NEUTRAL"]:
-			count+=1
-		else: break
-	if count >= winning_length:
-		return winning_length
-	global_count = max(global_count, count)
-	
-		# diag " \ "
-	count = 1
-	for i in range(1, winning_length):
-		if pos.y+i >= board_size.y or pos.x-i <0: break
-		if grid[pos.x-i][pos.y+i] in [team, "NEUTRAL"]:
-			count+=1
-		else: break
-	for i in range(1, winning_length):
-		if pos.y-i <0 or pos.x+i >= board_size.x: break
-		if grid[pos.x+i][pos.y-i] in [team, "NEUTRAL"]:
-			count+=1
-		else: break
-	if count >= winning_length:
-		return winning_length
-	global_count = max(global_count, count)
-	
-	return global_count
+	pass
 
 
 func printboard(board:Array):

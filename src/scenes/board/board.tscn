@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b4ei8rii3s46p"]
+[gd_scene load_steps=18 format=3 uid="uid://b4ei8rii3s46p"]
 
 [ext_resource type="Script" path="res://src/scenes/board/board.gd" id="1_uoraa"]
 [ext_resource type="Script" path="res://src/classes/player.gd" id="2_6ai7i"]
@@ -23,6 +23,89 @@ ai_mode = 1
 heuristic = null
 nb_pierres = null
 team = null
+
+[sub_resource type="Gradient" id="Gradient_odbm8"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.202381, 1)
+colors = PackedColorArray(0, 0, 0, 0.729412, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3vqss"]
+gradient = SubResource("Gradient_odbm8")
+fill = 1
+fill_from = Vector2(0.5, 0.547414)
+fill_to = Vector2(1, 0.568965)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mbx8u"]
+bg_color = Color(0.0810473, 0.624367, 0.991274, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fk0jn"]
+bg_color = Color(0, 0.631862, 0.971388, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivehc"]
+bg_color = Color(1, 0.351916, 0.178403, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydhhr"]
+bg_color = Color(1, 0.352941, 0.176471, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3yab2"]
+bg_color = Color(0, 0.639216, 0.313726, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b2a82"]
+bg_color = Color(3.70607e-06, 0.639726, 0.312763, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [node name="board" type="Node2D"]
 script = ExtResource("1_uoraa")
@@ -52,19 +135,17 @@ offset_right = 1897.0
 offset_bottom = 690.0
 theme_override_fonts/font = ExtResource("6_hjuy0")
 theme_override_font_sizes/font_size = 36
-text = "Pass"
+text = "Je passe !"
 
-[node name="Chase" type="Sprite2D" parent="."]
+[node name="show_board" type="Button" parent="."]
 texture_filter = 1
-position = Vector2(231, 281)
-scale = Vector2(2.54081, 2.36203)
-texture = ExtResource("3_s857l")
-
-[node name="marshall" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(1718, 289)
-scale = Vector2(3.09127, 3.09127)
-texture = ExtResource("4_if2mg")
+offset_left = 1479.0
+offset_top = 619.0
+offset_right = 1687.0
+offset_bottom = 690.0
+theme_override_fonts/font = ExtResource("6_hjuy0")
+theme_override_font_sizes/font_size = 36
+text = "Affiche la grille"
 
 [node name="fond" type="Sprite2D" parent="."]
 z_index = -1
@@ -72,12 +153,6 @@ texture_filter = 1
 position = Vector2(960, 539.5)
 scale = Vector2(1.875, 2.03598)
 texture = ExtResource("6_u5a14")
-
-[node name="Text" parent="." instance=ExtResource("4_n5b7x")]
-position = Vector2(270, 134)
-
-[node name="Text2" parent="." instance=ExtResource("4_n5b7x")]
-position = Vector2(1558, 154)
 
 [node name="new" type="Button" parent="."]
 texture_filter = 1
@@ -87,7 +162,7 @@ offset_right = 1896.0
 offset_bottom = 976.0
 theme_override_fonts/font = ExtResource("6_hjuy0")
 theme_override_font_sizes/font_size = 36
-text = "Another round !"
+text = "Encore une partie !"
 
 [node name="exit" type="Button" parent="."]
 texture_filter = 1
@@ -97,42 +172,204 @@ offset_right = 1897.0
 offset_bottom = 1051.0
 theme_override_fonts/font = ExtResource("6_hjuy0")
 theme_override_font_sizes/font_size = 36
-text = "Exit"
+text = "Fermez le jeu"
 
-[node name="Chase_name" type="RichTextLabel" parent="."]
+[node name="CPT_pion1" type="RichTextLabel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CPT_pion2" type="RichTextLabel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Chase" type="Node2D" parent="."]
+position = Vector2(192, 374)
+
+[node name="Chase_sprite" type="Sprite2D" parent="Chase"]
 z_index = 1
-offset_left = 201.0
-offset_top = 377.0
-offset_right = 285.0
-offset_bottom = 410.0
+texture_filter = 1
+position = Vector2(39, -93)
+scale = Vector2(2.54081, 2.36203)
+texture = ExtResource("3_s857l")
+
+[node name="Sprite2D" type="Sprite2D" parent="Chase/Chase_sprite"]
+z_as_relative = false
+position = Vector2(-0.393576, 4.65701)
+scale = Vector2(1.45746, 1.27671)
+texture = SubResource("GradientTexture2D_3vqss")
+
+[node name="Text" parent="Chase" instance=ExtResource("4_n5b7x")]
+position = Vector2(105, -219)
+
+[node name="ColorRect" type="Panel" parent="Chase"]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 81.0
+offset_bottom = 36.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_mbx8u")
+
+[node name="Chase_name" type="RichTextLabel" parent="Chase/ColorRect"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 8.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("6_hjuy0")
 theme_override_font_sizes/normal_font_size = 32
-text = "ChAIse"
+bbcode_enabled = true
+text = "[center]Chase"
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = 194.0
-offset_top = 369.0
-offset_right = 274.0
-offset_bottom = 404.0
+[node name="ColorRect2" type="Panel" parent="Chase"]
+offset_left = 1.0
+offset_top = 42.0
+offset_right = 80.0
+offset_bottom = 72.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_fk0jn")
 
-[node name="Marshall_name" type="RichTextLabel" parent="."]
-z_index = 1
-offset_left = 1706.0
-offset_top = 396.0
-offset_right = 1748.0
-offset_bottom = 417.0
+[node name="Chase_cpt" type="RichTextLabel" parent="Chase/ColorRect2"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 7.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("6_hjuy0")
 theme_override_font_sizes/normal_font_size = 32
-text = "YOU"
+bbcode_enabled = true
+text = "[center]0"
 
-[node name="ColorRect2" type="ColorRect" parent="."]
-offset_left = 1690.0
-offset_top = 389.0
-offset_right = 1757.0
-offset_bottom = 419.0
+[node name="Marshall" type="Node2D" parent="."]
+position = Vector2(1690, 389)
+
+[node name="Marshall_sprite" type="Sprite2D" parent="Marshall"]
+texture_filter = 1
+position = Vector2(28, -100)
+scale = Vector2(3.09127, 3.09127)
+texture = ExtResource("4_if2mg")
+
+[node name="Sprite2D" type="Sprite2D" parent="Marshall/Marshall_sprite"]
+z_index = -1
+z_as_relative = false
+position = Vector2(-0.485244, 9.1732)
+scale = Vector2(1.1676, 0.903318)
+texture = SubResource("GradientTexture2D_3vqss")
+
+[node name="Text" parent="Marshall" instance=ExtResource("4_n5b7x")]
+position = Vector2(-154, -218)
+on_right = true
+
+[node name="ColorRect" type="Panel" parent="Marshall"]
+offset_left = -15.0
+offset_right = 78.0
+offset_bottom = 30.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ivehc")
+
+[node name="Marshall_name" type="RichTextLabel" parent="Marshall/ColorRect"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 7.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("6_hjuy0")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[center]Marshall"
+
+[node name="ColorRect2" type="Panel" parent="Marshall"]
+offset_left = 1.0
+offset_top = 42.0
+offset_right = 66.0
+offset_bottom = 68.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ydhhr")
+
+[node name="Marshall_cpt" type="RichTextLabel" parent="Marshall/ColorRect2"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 5.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("6_hjuy0")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[center]0"
+
+[node name="win" type="Panel" parent="."]
+offset_left = 781.0
+offset_top = 461.0
+offset_right = 1137.0
+offset_bottom = 587.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3yab2")
+
+[node name="win_text" type="RichTextLabel" parent="win"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 37.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("6_hjuy0")
+theme_override_font_sizes/normal_font_size = 76
+bbcode_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="win"]
+z_index = -1
+z_as_relative = false
+position = Vector2(170, 59)
+scale = Vector2(7.46925, 5.92969)
+texture = SubResource("GradientTexture2D_3vqss")
+
+[node name="turn" type="Panel" parent="."]
+offset_left = 20.0
+offset_top = 780.0
+offset_right = 456.0
+offset_bottom = 906.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_b2a82")
+
+[node name="turn_text" type="RichTextLabel" parent="turn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 17.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("6_hjuy0")
+theme_override_font_sizes/normal_font_size = 76
+bbcode_enabled = true
+text = "[center]C'est au tour de [color=blue]Chase[color=black] de jouer"
+
+[node name="Sprite2D" type="Sprite2D" parent="turn"]
+z_index = -1
+z_as_relative = false
+position = Vector2(221, 55)
+scale = Vector2(7.28125, 3.35938)
+texture = SubResource("GradientTexture2D_3vqss")
 
 [connection signal="pressed" from="pass" to="." method="_on_pass_pressed"]
+[connection signal="pressed" from="show_board" to="." method="_on_show_board_pressed"]
 [connection signal="pressed" from="new" to="." method="_on_new_pressed"]
 [connection signal="pressed" from="exit" to="." method="_on_exit_pressed"]
