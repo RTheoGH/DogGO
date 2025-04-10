@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://c87elogsvxdpn"]
+[gd_scene load_steps=6 format=3 uid="uid://c87elogsvxdpn"]
 
 [ext_resource type="Script" path="res://src/scenes/UI/setup_game.gd" id="1_s3fkw"]
+[ext_resource type="Texture2D" uid="uid://bdk1mwdtb2fbb" path="res://resources/images/dog_town.png" id="2_8x22l"]
+[ext_resource type="FontFile" uid="uid://yvflshvt4htr" path="res://resources/pixeltype.ttf" id="2_et1p1"]
+[ext_resource type="Texture2D" uid="uid://cs1yqiple4i24" path="res://resources/images/chase.png" id="3_yqate"]
+[ext_resource type="Texture2D" uid="uid://buut74wa6585s" path="res://resources/images/marshall.png" id="5_61yls"]
 
 [node name="Setup Game" type="Control"]
 layout_mode = 3
@@ -11,18 +15,27 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_s3fkw")
 
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.699653, 0.699653, 0.699653, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_8x22l")
+
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.516
 anchor_top = 0.035
-anchor_right = 0.614
+anchor_right = 1.0
 anchor_bottom = 0.099
-offset_left = 0.279907
-offset_top = 0.200001
-offset_right = 0.119995
-offset_bottom = 0.0799942
-theme_override_font_sizes/font_size = 32
+offset_left = 4.0
+offset_top = 34.2
+offset_bottom = 98.08
+theme_override_fonts/font = ExtResource("2_et1p1")
+theme_override_font_sizes/font_size = 150
 text = "Setup Game"
 horizontal_alignment = 1
 
@@ -72,39 +85,7 @@ theme_override_font_sizes/font_size = 22
 text = "Select Board Size:
 "
 horizontal_alignment = 1
-
-[node name="Player1Selection" type="OptionButton" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.231
-anchor_top = 0.278
-anchor_right = 0.435
-anchor_bottom = 0.345
-offset_left = 0.47998
-offset_top = 3.76001
-offset_right = 0.799927
-offset_bottom = 0.399963
-selected = 0
-item_count = 3
-popup/item_0/text = "User"
-popup/item_1/text = "Random"
-popup/item_1/id = 1
-popup/item_2/text = "Montecarlo"
-popup/item_2/id = 2
-
-[node name="Player1Label" type="Label" parent="Player1Selection"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.037
-anchor_top = -0.855
-anchor_right = 0.961
-offset_left = -0.0559998
-offset_top = -0.00499725
-offset_right = 0.0319824
-offset_bottom = -14.0
-theme_override_font_sizes/font_size = 22
-text = "Player 1:"
-horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Launch" type="Button" parent="."]
 layout_mode = 1
@@ -119,40 +100,84 @@ offset_right = -0.280029
 theme_override_font_sizes/font_size = 32
 text = "Launch"
 
-[node name="Player2Selecton" type="OptionButton" parent="."]
+[node name="player1Options" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.527
-anchor_top = 0.269
-anchor_right = 0.737
-anchor_bottom = 0.345
-offset_left = 0.159973
-offset_top = 11.48
-offset_right = -0.0400391
-offset_bottom = 0.399963
+anchor_left = 0.2
+anchor_top = 0.206
+anchor_right = 0.4
+anchor_bottom = 0.5
+offset_left = 0.47998
+offset_top = 0.519989
+offset_right = 0.799927
+offset_bottom = -0.400024
+metadata/_edit_use_anchors_ = true
+
+[node name="Player1Label" type="Label" parent="player1Options"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_et1p1")
+theme_override_font_sizes/font_size = 82
+text = "Chase"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="player1Options"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+texture = ExtResource("3_yqate")
+stretch_mode = 5
+
+[node name="Player1Selection" type="OptionButton" parent="player1Options"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
 selected = 0
 item_count = 3
-popup/item_0/text = "User"
-popup/item_1/text = "Random"
+popup/item_0/text = "Joueur"
+popup/item_1/text = "Aléatoire"
 popup/item_1/id = 1
 popup/item_2/text = "Montecarlo"
 popup/item_2/id = 2
 
-[node name="Player2Label" type="Label" parent="Player2Selecton"]
+[node name="player2Options" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.072
-anchor_top = -0.72
-anchor_right = 0.979
-anchor_bottom = -0.107
-offset_right = -0.125
-offset_bottom = 0.0250006
-theme_override_font_sizes/font_size = 22
-text = "Player 2:"
+anchor_left = 0.6
+anchor_top = 0.206
+anchor_right = 0.8
+anchor_bottom = 0.5
+offset_left = 0.47998
+offset_top = 0.519989
+offset_right = 0.799927
+offset_bottom = -0.400024
+metadata/_edit_use_anchors_ = true
+
+[node name="Player1Label" type="Label" parent="player2Options"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_et1p1")
+theme_override_font_sizes/font_size = 82
+text = "Marshall"
 horizontal_alignment = 1
-clip_text = true
+
+[node name="TextureRect" type="TextureRect" parent="player2Options"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+texture = ExtResource("5_61yls")
+stretch_mode = 5
+
+[node name="Player2Selection" type="OptionButton" parent="player2Options"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Joueur"
+popup/item_1/text = "Aléatoire"
+popup/item_1/id = 1
+popup/item_2/text = "Montecarlo"
+popup/item_2/id = 2
 
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
 [connection signal="item_selected" from="BoardSize" to="." method="_on_board_size_item_selected"]
-[connection signal="item_selected" from="Player1Selection" to="." method="_on_select_player_item_selected"]
 [connection signal="pressed" from="Launch" to="." method="_on_launch_pressed"]
+[connection signal="item_selected" from="player1Options/Player1Selection" to="." method="_on_select_player_item_selected"]
+[connection signal="item_selected" from="player2Options/Player2Selection" to="." method="_on_select_player_item_selected"]

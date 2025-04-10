@@ -15,7 +15,7 @@ func _on_launch_pressed() -> void:
 	player2.team = "x"
 	
 
-	player1.ai_mode = $Player1Selection.selected
+	player1.ai_mode = $player1Options/Player1Selection.selected
 	player2.ai_mode = $Player2Selecton.selected
 	
 	Gamemaster.players = [player1, player2]
