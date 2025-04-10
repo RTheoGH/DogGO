@@ -7,7 +7,7 @@ enum MODES {USER, RANDOM, MONTECARLO}
 enum HEURISTICS {DUMB}
 
 @export var name: String
-@export var ai_mode:MODES = MODES.USER
+@export var ai_mode:MODES = MODES.MONTECARLO
 @export var heuristic:HEURISTICS = HEURISTICS.DUMB
 @export var nb_pierres = 25
 
@@ -64,7 +64,7 @@ func win_condition():
 
 func play_montecarlo(board):
 	var preview = board.preview()
-	montecarlo.play(team, "x", board.map_size, board, preview)
+	montecarlo.play(team, "x", board.map_size, preview["board"], preview)
 	
 func montercarlo_rec(preview:Array, n_moves:int, n_bests:int, k:int):
 	var possible_moves:Array[Vector2i] = []
