@@ -6,15 +6,22 @@ var adversary:String
 var winning_length:int
 var board_size:Vector2i
 
+var current_id:Dictionary = {"x":0, "o":0} # Pour incrémenter le numéro du groupe quand on pose une pierre 
+var pos_deg_liberte:Dictionary = {"x":{}, "o":{}} # Pour un id de groupe, donne la position des libertés
+var groups:Dictionary = {"x":{}, "o":{}} # Pour un id de groupe, donne tous les squares présents dans le groupe
+
 var max_test := 30
 var max_width := 5
 var max_depth := 4
 
-func play(team:String, adversary:String, board_size:Vector2i, board:Array):
+func play(team:String, adversary:String, board_size:Vector2i, board:Array, preview:Dictionary):
 	self.team = team
 	self.adversary = adversary
 	self.winning_length = winning_length
 	self.board_size = board_size
+	self.current_id = preview["current_id"]
+	self.pos_deg_liberte = preview["pos_deg_liberte"]
+	self.groups = preview["groups"]
 	
 	return montecarlo(board);
 	
@@ -41,8 +48,20 @@ func get_next_move(board:Array):
 			return curr_move
 	return null
 
+func get_neighbors(pos:Vector2i):
+	var neighbors = []
+	assert(board_size[0] >= 2, "minimum size : 2")
+	
+	for v in [Vector2i(pos.x+1, pos.y), Vector2i(pos.x-1, pos.y), Vector2i(pos.x, pos.y+1), Vector2i(pos.x, pos.y-1),]:
+		if 0 <= v.x && v.x <= board_size[0]-1 && 0 <= v.y && v.y <= board_size[0]-1:
+			neighbors.push_back(v)
+	return neighbors
+	
+#func try_take(pos:Vector2i, board:Array) -> bool:
+	
 
 func get_all_moves(board:Array, team:String):
+	
 	move_idx = Vector2i.ZERO
 	var res:Array = []
 	

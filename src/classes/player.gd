@@ -47,7 +47,7 @@ func play_random(board):
 	print("PAS TROUVE D'EMPLACEMENT")
 
 func play_minmax(board):
-	var preview = board.get_preview()
+	var preview = board.preview()
 
 func heuristic_dumb():
 	pass
@@ -58,7 +58,8 @@ func win_condition():
 
 
 func play_montecarlo(board):
-	var preview = board.get_preview()
+	var preview = board.preview()
+	montecarlo.play(team, "x", board.map_size, board, preview)
 	
 func montercarlo_rec(preview:Array, n_moves:int, n_bests:int, k:int):
 	var possible_moves:Array[Vector2i] = []

@@ -181,12 +181,12 @@ func preview():
 			res[i].append(
 				grid[i][j].team
 			)
-	return res
+	return {"board" : res, "pos_deg_liberte" : pos_deg_liberte, "groups" : groups, "current_id" : current_id}
 	
 func check_can_play() -> bool:
 	for i in map_size.x:
 		for j in map_size.y:
-			if await try_take(Vector2i(i, j), true):
+			if await try_take(Vector2i(i, j)):
 				return true
 	return false
  
