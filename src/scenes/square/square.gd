@@ -74,7 +74,8 @@ func _on_minimum_size_changed() -> void:
 	$Node2D.position = custom_minimum_size/2.0
 
 func _draw():
-	draw_rect(Rect2(0.0,0.0,140.0,140.0),Color.ANTIQUE_WHITE)
-	draw_line(Vector2(60,0),Vector2(60,140),Color.BLACK,5.0)
-	draw_line(Vector2(0,60),Vector2(140,60),Color.BLACK,5.0)
+	var couleur = Color(1.0,1.0,1.0,0.25)
+	draw_rect(Rect2(0.0,0.0,129.0,129.0),couleur)
+	draw_line(Vector2(60,0),Vector2(60,129),Color.BLACK,5.0)
+	draw_line(Vector2(0,60),Vector2(129,60),Color.BLACK,5.0)
 	#draw_rect(Rect2(10.0, 10.0, 100.0, 100.0), Color.RED)

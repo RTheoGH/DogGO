@@ -42,6 +42,9 @@ var grid:Array[Array] #[[Square]]
 func _ready() -> void:
 	$new.hide()
 	$exit.hide()
+	$win.hide()
+	$show_board.hide()
+	$squares.show()
 	Gamemaster.players.append(player_1)
 	Gamemaster.players.append(player_2)
 	Gamemaster.board_node = self
@@ -189,8 +192,7 @@ func check_win_condition(pos:Vector2i):
 					nb_pierre_2 += 1
 		var winner = player_1 if nb_pierre_1 > nb_pierre_2 else player_2
 		Gamemaster.win(winner)
-		$exit.show()
-		$new.show()
+		announce_winner()
 		#$squares.hide()
 	## lines
 	#var count := 1
@@ -256,16 +258,67 @@ func check_win_condition(pos:Vector2i):
 func _on_pass_pressed() -> void:
 	var tour = Gamemaster.current_player.team
 	if tour == "O":
-		$Text.show_pass()
+		$Chase/Text.show_pass()
 	else:
-		$Text2.show_pass()
+		$Marshall/Text.show_pass()
 	Gamemaster.current_player._finish_turn()
-
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()
 
-
 func _on_new_pressed() -> void:
 	Gamemaster.restart_with_same_settings()
 	#$squares.show()
+
+func get_nb_pions_placed():
+	var cpt_chase = 0
+	var cpt_marshall = 0
+	for i in map_size.x:
+		for j in map_size.y:
+			if grid[i][j].team == "x":
+				cpt_marshall += 1
+			if grid[i][j].team == "o":
+				cpt_chase += 1
+				
+	return [cpt_marshall,cpt_chase]
+	
+func update_nb_pions_placed():
+	var list_pions = get_nb_pions_placed()
+	$Chase/ColorRect2/Chase_cpt.text = str("[center]",list_pions[1])
+	$Marshall/ColorRect2/Marshall_cpt.text = str("[center]",list_pions[0])
+
+func announce_winner():
+	var text = ""
+	var list_pions = get_nb_pions_placed()
+	$squares.hide()
+	
+	if list_pions[0] > list_pions[1]:
+		text = "[center]Tu gagnes !"
+	elif list_pions[0] < list_pions[1]:
+		text = "[center]ChAIse gagne !"
+	else:
+		text = "[center]Match nul !"
+	$win/win_text.text = text
+	$win.show()
+	$exit.show()
+	$new.show()
+	$show_board.show()
+
+func _on_show_board_pressed() -> void:
+	if $show_board.text == "Cache la grille":
+		$show_board.text = "Affiche la grille"
+	else:
+		$show_board.text = "Cache la grille"
+		
+	print($squares.is_visible())
+	print($win.is_visible())
+	
+	if $squares.is_visible():
+		$squares.hide()
+	else:
+		$squares.show()
+	
+	if $win.is_visible():
+		$win.hide()
+	else:
+		$win.show()
