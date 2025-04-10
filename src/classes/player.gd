@@ -35,13 +35,18 @@ func _finish_turn():
 
 func play_random(board):
 	for i in range(600):
-		if (await board.try_take(
+		if (board.try_take(
 			Vector2i(
 				randi_range(0, board.map_size.x-1),
 				randi_range(0, board.map_size.y-1),
 			)
 		)):
-			
+			await board.take(
+				Vector2i(
+					randi_range(0, board.map_size.x-1),
+					randi_range(0, board.map_size.y-1),
+				)
+			)
 			Gamemaster.current_player._finish_turn()
 			return
 	print("PAS TROUVE D'EMPLACEMENT")

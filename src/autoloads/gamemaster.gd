@@ -4,6 +4,7 @@ signal turn_finished
 
 var board_node:Node
 var players = []
+var boardsize
 
 var game_on:bool
 var can_play := true
@@ -49,4 +50,4 @@ func restart_with_same_settings():
 
 func to_menu():
 	game_on = false
-	get_tree().change_scene_to_packed(preload("res://src/scenes/UI/Main Menu.tscn"))
+	get_tree().change_scene_to_packed(preload("res://src/scenes/UI/MainMenu.tscn"))
