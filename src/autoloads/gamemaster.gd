@@ -20,6 +20,8 @@ var current_player:Player
 
 func launch_game():
 	current_player_index = 0
+	can_play = true
+	game_on = true
 	current_player = players[0]
 	while (game_on):
 		await next_turn()
@@ -39,3 +41,12 @@ func next_turn():
 func win(player: Player):
 	game_on = false
 	print("WINNER: ", player.team)
+
+func restart_with_same_settings():
+	game_on = false
+	get_tree().change_scene_to_packed(preload("res://src/scenes/board/board.tscn"))
+	launch_game()
+
+func to_menu():
+	game_on = false
+	get_tree().change_scene_to_packed(preload("res://src/scenes/UI/Main Menu.tscn"))

@@ -10,8 +10,7 @@ func _on_pressed() -> void:
 			print("Player tried to play when it wasn't a player's turn")
 			return
 		
-		if board.try_take(grid_position):
-			board.take(grid_position)
+		if await board.try_take(grid_position):
 			Gamemaster.current_player._finish_turn()
 	
 func activate(player:Player = null) -> void:
@@ -72,3 +71,9 @@ func clear():
 func _on_minimum_size_changed() -> void:
 	$Node2D.scale = Vector2.ONE * 0.5 * (custom_minimum_size.y / 50.0)
 	$Node2D.position = custom_minimum_size/2.0
+
+func _draw():
+	draw_rect(Rect2(0.0,0.0,140.0,140.0),Color.ANTIQUE_WHITE)
+	draw_line(Vector2(60,0),Vector2(60,140),Color.BLACK,5.0)
+	draw_line(Vector2(0,60),Vector2(140,60),Color.BLACK,5.0)
+	#draw_rect(Rect2(10.0, 10.0, 100.0, 100.0), Color.RED)

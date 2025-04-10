@@ -40,6 +40,8 @@ class Square:
 var grid:Array[Array] #[[Square]]
 
 func _ready() -> void:
+	$new.hide()
+	$exit.hide()
 	Gamemaster.players.append(player_1)
 	Gamemaster.players.append(player_2)
 	Gamemaster.board_node = self
@@ -184,13 +186,13 @@ func preview():
 func check_can_play() -> bool:
 	for i in map_size.x:
 		for j in map_size.y:
-			if try_take(Vector2i(i, j)):
+			if await try_take(Vector2i(i, j), true):
 				return true
 	return false
  
 func check_win_condition(pos:Vector2i):
 	var skip_turn = false # à faire : si les deux joueurs skippent leur tour
-	if((player_1.nb_pierres == 0 and player_2.nb_pierres == 0) or skip_turn or !check_can_play()):
+	if((player_1.nb_pierres == 0 and player_2.nb_pierres == 0) or skip_turn or !(await check_can_play())):
 		var nb_pierre_1 = 0
 		var nb_pierre_2 = 0
 		for i in map_size.x:
@@ -201,6 +203,9 @@ func check_win_condition(pos:Vector2i):
 					nb_pierre_2 += 1
 		var winner = player_1 if nb_pierre_1 > nb_pierre_2 else player_2
 		Gamemaster.win(winner)
+		$exit.show()
+		$new.show()
+		#$squares.hide()
 	## lines
 	#var count := 1
 	#for i in range(1, winning_length):
@@ -263,4 +268,18 @@ func check_win_condition(pos:Vector2i):
 
 
 func _on_pass_pressed() -> void:
-	$Text.show_pass()
+	var tour = Gamemaster.current_player.team
+	if tour == "O":
+		$Text.show_pass()
+	else:
+		$Text2.show_pass()
+	Gamemaster.current_player._finish_turn()
+
+
+func _on_exit_pressed() -> void:
+	get_tree().quit()
+
+
+func _on_new_pressed() -> void:
+	Gamemaster.restart_with_same_settings()
+	#$squares.show()
