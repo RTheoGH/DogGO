@@ -13,6 +13,9 @@ var groups:Dictionary = {"x":{}, "o":{}} # Pour un id de groupe, donne tous les 
 @export var player_1:Player
 @export var player_2:Player
 
+var bus_idx = AudioServer.get_bus_index("Master")
+var mute = false
+
 class Square:
 	var button:Button
 	var team:String
@@ -112,7 +115,10 @@ func take(pos:Vector2i):
 	groups[curr_team][ curr_id ] = [pos]
 	
 	update_nb_pions_placed()
-	$Woof.play()
+	if Gamemaster.current_player.team == "o":
+		$Chase_audio.play()
+	elif Gamemaster.current_player.team == "x":
+		$Marshall_audio.play()
 	
 	var enemy_groups_surrounded := []
 	for n in get_neighbors(pos):
@@ -284,3 +290,11 @@ func _on_exit_mouse_entered() -> void:
 
 func _on_show_board_mouse_entered() -> void:
 	$Menu.play()
+
+func _on_silence_pressed() -> void:
+	mute = !mute
+	if mute:
+		$Silence.text = "Revenez !"
+	else:
+		$Silence.text = "Silence !"
+	AudioServer.set_bus_mute(bus_idx, mute)
