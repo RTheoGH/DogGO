@@ -16,7 +16,7 @@ var groups:Dictionary = {"x":{}, "o":{}} # Pour un id de groupe, donne tous les 
 class Square:
 	var button:Button
 	var team:String
-	var group_id:String
+	var group_id:int
 		
 	func _init(button) -> void:
 		self.button = button
@@ -61,12 +61,14 @@ func _ready() -> void:
 			grid[i].append(Square.new(new_square))
 	Gamemaster.launch_game()
 
-func clear_all(surrounded_list:Array):
-	await get_tree().create_timer(0.3).timeout
-	for p in surrounded_list:
+func clear_all(team:String, group_id:int):
+	await get_tree().create_timer(0.2).timeout
+	for p in groups[team][group_id]:
 		await get_tree().create_timer(0.15).timeout
 		grid[p.x][p.y].clear()
 		print(p, "  TAKEN")
+	groups[team].erase(group_id)
+	pos_deg_liberte[team].erase(group_id)
 
 #func try_take(pos:Vector2i, try:bool = false) -> bool:
 	#for n in get_neighbors(pos):
@@ -95,34 +97,58 @@ func clear_all(surrounded_list:Array):
 	#return false
 
 func try_take(pos:Vector2i) -> bool:
+	if grid[pos.x][pos.y].team != "NEUTRAL": return false
 	for n in get_neighbors(pos):
 		if grid[n.x][n.y].team == "NEUTRAL":
+			print("yes")
 			return true
-		elif grid[n.x][n.y].team == Gamemaster.current_player.team:
-			if !(pos_deg_liberte[grid[n.x][n.y].team][grid[n.x][n.y].group_id].size() == 1 && pos_deg_liberte[grid[n.x][n.y].team][grid[n.x][n.y].group_id][0] == pos):
-				return false
-	return true
+			
+		elif grid[n.x][n.y].team != Gamemaster.current_player.team:
+			
+			if pos_deg_liberte[grid[n.x][n.y].team][grid[n.x][n.y].group_id].size() <= 1:
+				return true
+			
+	return false
 
 func take(pos:Vector2i):
+	var curr_team := Gamemaster.current_player.team
+	var curr_id:int = current_id[curr_team]
 	print(grid[pos.x][pos.y].group_id)
 	grid[pos.x][pos.y].take(Gamemaster.current_player)
-	grid[pos.x][pos.y].group_id = str(current_id[Gamemaster.current_player.team])
-	pos_deg_liberte[Gamemaster.current_player.team][str(current_id[Gamemaster.current_player.team])] = []
-	pos_deg_liberte[Gamemaster.current_player.team][str(current_id[Gamemaster.current_player.team])].append(pos)
-	for n in get_neighbors(pos):
-		print(grid[n.x][n.y].team)
-		if grid[n.x][n.y].team == "NEUTRAL" : 
-			if n not in pos_deg_liberte[Gamemaster.current_player.team][grid[pos.x][pos.y].group_id]:
-				pos_deg_liberte[Gamemaster.current_player.team][grid[pos.x][pos.y].group_id].append(n)
-		elif grid[n.x][n.y].team == Gamemaster.current_player.team:
-			groups[Gamemaster.current_player.team][grid[pos.x][pos.y].group_id] = pos
-			groups[grid[n.x][n.y].team].erase(grid[n.x][n.y].group_id)
-			for g in groups[grid[n.x][n.y].team][current_id[grid[n.x][n.y].team]]:
-				grid[g.x][g.y].group_id = grid[pos.x][pos.y].group_id
-		else:
-			pos_deg_liberte[grid[n.x][n.y].team][grid[n.x][n.y].group_id].erase(n)
-	current_id[Gamemaster.current_player.team] += 1
+	grid[pos.x][pos.y].group_id = curr_id
+	pos_deg_liberte[curr_team][curr_id] = []
+	groups[curr_team][ curr_id ] = [pos]
 	
+	
+	var enemy_groups_surrounded := []
+	for n in get_neighbors(pos):
+		var n_team:String = grid[n.x][n.y].team
+		var n_id:int = grid[n.x][n.y].group_id
+		
+		
+		if n_team == "NEUTRAL" : 
+			if n not in pos_deg_liberte[curr_team][curr_id]:
+				pos_deg_liberte[curr_team][curr_id].append(n)
+	
+		elif n_team == curr_team:
+			
+			for j in pos_deg_liberte[curr_team][n_id]:
+					if (j != pos) and (j not in pos_deg_liberte[curr_team][ current_id[curr_team] ]):
+						pos_deg_liberte[curr_team][ current_id[curr_team] ].append(j)
+			
+			for g in groups[n_team][n_id]:
+				grid[g.x][g.y].group_id = grid[pos.x][pos.y].group_id
+				groups[curr_team][grid[pos.x][pos.y].group_id].append(g)
+			groups[n_team].erase(n_id)
+		else:
+			pos_deg_liberte[n_team][n_id].erase(n)
+			if pos_deg_liberte[n_team][n_id].is_empty():
+				clear_all(n_team, n_id)
+				
+	current_id[curr_team] += 1
+	
+	
+
 func get_neighbors(pos:Vector2i):
 	var neighbors = []
 	assert(goban_size >= 2, "minimum size : 2")
@@ -131,46 +157,6 @@ func get_neighbors(pos:Vector2i):
 		if 0 <= v.x && v.x <= goban_size-1 && 0 <= v.y && v.y <= goban_size-1:
 			neighbors.push_back(v)
 	return neighbors
-	
-var same_team_neighbors = []
-
-func is_surrounded(pos:Vector2i, same_team_neighbors:Array, team:String):
-	for n in get_neighbors(pos):
-		if grid[n.x][n.y].team  == "NEUTRAL" :
-			return false
-		if grid[n.x][n.y].team == team and n not in same_team_neighbors:
-			return false
-	same_team_neighbors.append(pos)
-	return true
-
-func rec_surrounded(pos:Vector2i,same_team_neighbors:Array, team:String):
-	if is_surrounded(pos, same_team_neighbors, team):
-		return true
-	else:
-		for n in get_neighbors(pos):
-			#print(n)
-			if Gamemaster.current_player.team == grid[n.x][n.y].team and n not in same_team_neighbors:
-				same_team_neighbors.append(pos)
-				return rec_surrounded(n, same_team_neighbors, team)
-
-func surrounded_iter(pos:Vector2i, team:String, same_team_neighbors:Array) -> bool:
-	var to_check:Array[Vector2i] = [pos]
-	
-	while !to_check.is_empty():
-		var current_pos:Vector2i = to_check.pop_back()
-		same_team_neighbors.append(current_pos)
-		var n_enemy_sides := 0
-		for n in get_neighbors(current_pos):
-			if grid[n.x][n.y].team  == "NEUTRAL" :
-				return false
-			#print(n)
-			if team == grid[n.x][n.y].team and n not in same_team_neighbors:
-				to_check.append(n)
-			else:
-				n_enemy_sides += 1
-		if to_check.is_empty() && n_enemy_sides == 4: return true
-	
-	return true;
 
 func preview():
 	var res:Array
@@ -186,7 +172,7 @@ func preview():
 func check_can_play() -> bool:
 	for i in map_size.x:
 		for j in map_size.y:
-			if await try_take(Vector2i(i, j), true):
+			if await try_take(Vector2i(i, j)):
 				return true
 	return false
  

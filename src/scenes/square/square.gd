@@ -10,7 +10,8 @@ func _on_pressed() -> void:
 			print("Player tried to play when it wasn't a player's turn")
 			return
 		
-		if await board.try_take(grid_position):
+		if board.try_take(grid_position):
+			await board.take(grid_position)
 			Gamemaster.current_player._finish_turn()
 	
 func activate(player:Player = null) -> void:
