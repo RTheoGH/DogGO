@@ -6,6 +6,9 @@ const square_size := 125
 var goban_size := 7
 var map_size := Vector2i(goban_size, goban_size)
 const winning_length:int = 3
+var current_id:Dictionary = {"x":0, "o":0} # Pour incrémenter le numéro du groupe quand on pose une pierre 
+var pos_deg_liberte:Dictionary = {"x":{}, "o":{}} # Pour un id de groupe, donne la position des libertés
+var groups:Dictionary = {"x":{}, "o":{}} # Pour un id de groupe, donne tous les squares présents dans le groupe
 
 @export var player_1:Player
 @export var player_2:Player
@@ -13,6 +16,7 @@ const winning_length:int = 3
 class Square:
 	var button:Button
 	var team:String
+	var group_id:String
 		
 	func _init(button) -> void:
 		self.button = button
@@ -62,31 +66,60 @@ func clear_all(surrounded_list:Array):
 		grid[p.x][p.y].clear()
 		print(p, "  TAKEN")
 
-func try_take(pos:Vector2i, try:bool = false) -> bool:
+#func try_take(pos:Vector2i, try:bool = false) -> bool:
+	#for n in get_neighbors(pos):
+		#print(n)
+	#var surrounded_list:Array = []
+	#if grid[pos.x][pos.y].is_free():
+		#var other_player:Player = Gamemaster.players[(Gamemaster.current_player_index+1)%2]
+		#
+		#if !surrounded_iter(pos, Gamemaster.current_player.team, surrounded_list):
+			#if !try:
+				#grid[pos.x][pos.y].take(Gamemaster.current_player)
+		#else:
+			#return false
+		#
+		#for n in get_neighbors(pos):
+			#if grid[n .x][n .y].team == "NEUTRAL": continue
+			#if grid[n.x][n.y].team == Gamemaster.current_player.team: continue
+			#surrounded_list = []
+			#var v := surrounded_iter(n, other_player.team, surrounded_list)
+			#if v:
+				#if !try:
+					#clear_all(surrounded_list)
+		#if !try:
+			#check_win_condition(pos)
+		#return true
+	#return false
+
+func try_take(pos:Vector2i) -> bool:
 	for n in get_neighbors(pos):
-		print(n)
-	var surrounded_list:Array = []
-	if grid[pos.x][pos.y].is_free():
-		var other_player:Player = Gamemaster.players[(Gamemaster.current_player_index+1)%2]
-		
-		if !surrounded_iter(pos, Gamemaster.current_player.team, surrounded_list):
-			if !try:
-				grid[pos.x][pos.y].take(Gamemaster.current_player)
+		if grid[n.x][n.y].team == "NEUTRAL":
+			return true
+		elif grid[n.x][n.y].team == Gamemaster.current_player.team:
+			if !(pos_deg_liberte[grid[n.x][n.y].team][grid[n.x][n.y].group_id].size() == 1 && pos_deg_liberte[grid[n.x][n.y].team][grid[n.x][n.y].group_id][0] == pos):
+				return false
+	return true
+
+func take(pos:Vector2i):
+	print(grid[pos.x][pos.y].group_id)
+	grid[pos.x][pos.y].take(Gamemaster.current_player)
+	grid[pos.x][pos.y].group_id = str(current_id[Gamemaster.current_player.team])
+	pos_deg_liberte[Gamemaster.current_player.team][str(current_id[Gamemaster.current_player.team])] = []
+	pos_deg_liberte[Gamemaster.current_player.team][str(current_id[Gamemaster.current_player.team])].append(pos)
+	for n in get_neighbors(pos):
+		print(grid[n.x][n.y].team)
+		if grid[n.x][n.y].team == "NEUTRAL" : 
+			if n not in pos_deg_liberte[Gamemaster.current_player.team][grid[pos.x][pos.y].group_id]:
+				pos_deg_liberte[Gamemaster.current_player.team][grid[pos.x][pos.y].group_id].append(n)
+		elif grid[n.x][n.y].team == Gamemaster.current_player.team:
+			groups[Gamemaster.current_player.team][grid[pos.x][pos.y].group_id] = pos
+			groups[grid[n.x][n.y].team].erase(grid[n.x][n.y].group_id)
+			for g in groups[grid[n.x][n.y].team][current_id[grid[n.x][n.y].team]]:
+				grid[g.x][g.y].group_id = grid[pos.x][pos.y].group_id
 		else:
-			return false
-		
-		for n in get_neighbors(pos):
-			if grid[n .x][n .y].team == "NEUTRAL": continue
-			if grid[n.x][n.y].team == Gamemaster.current_player.team: continue
-			surrounded_list = []
-			var v := surrounded_iter(n, other_player.team, surrounded_list)
-			if v:
-				if !try:
-					clear_all(surrounded_list)
-		if !try:
-			check_win_condition(pos)
-		return true
-	return false
+			pos_deg_liberte[grid[n.x][n.y].team][grid[n.x][n.y].group_id].erase(n)
+	current_id[Gamemaster.current_player.team] += 1
 	
 func get_neighbors(pos:Vector2i):
 	var neighbors = []
@@ -151,7 +184,7 @@ func preview():
 func check_can_play() -> bool:
 	for i in map_size.x:
 		for j in map_size.y:
-			if try_take(Vector2i(i, j), true):
+			if try_take(Vector2i(i, j)):
 				return true
 	return false
  

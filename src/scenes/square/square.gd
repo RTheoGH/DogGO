@@ -11,6 +11,7 @@ func _on_pressed() -> void:
 			return
 		
 		if board.try_take(grid_position):
+			board.take(grid_position)
 			Gamemaster.current_player._finish_turn()
 	
 func activate(player:Player = null) -> void:
