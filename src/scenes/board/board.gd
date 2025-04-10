@@ -45,8 +45,9 @@ func _ready() -> void:
 	$win.hide()
 	$show_board.hide()
 	$squares.show()
-	Gamemaster.players.append(player_1)
-	Gamemaster.players.append(player_2)
+	if Gamemaster.players.is_empty():
+		Gamemaster.players.append(player_1)
+		Gamemaster.players.append(player_2)
 	Gamemaster.board_node = self
 	for i in map_size.x:
 		grid.append([])
@@ -145,9 +146,9 @@ func take(pos:Vector2i):
 			groups[n_team].erase(n_id)
 		else:
 			pos_deg_liberte[n_team][n_id].erase(n)
+			print("DEGS ", pos_deg_liberte[n_team][n_id])
 			if pos_deg_liberte[n_team][n_id].is_empty():
 				clear_all(n_team, n_id)
-				
 	current_id[curr_team] += 1
 	
 	
