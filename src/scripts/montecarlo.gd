@@ -53,22 +53,42 @@ func get_neighbors(pos:Vector2i):
 	assert(board_size[0] >= 2, "minimum size : 2")
 	
 	for v in [Vector2i(pos.x+1, pos.y), Vector2i(pos.x-1, pos.y), Vector2i(pos.x, pos.y+1), Vector2i(pos.x, pos.y-1),]:
-		if 0 <= v.x && v.x <= board_size[0]-1 && 0 <= v.y && v.y <= board_size[0]-1:
+		if 0 <= v.x && v.x <= board_size.x-1 && 0 <= v.y && v.y <= board_size.x-1:
 			neighbors.push_back(v)
 	return neighbors
 	
-#func try_take(pos:Vector2i, board:Array) -> bool:
-	
+func try_take(board:Array, pos:Vector2i, team:String, adversary:String) -> bool:
+	if board[pos.x][pos.y] != "NEUTRAL": return false
+	for n in get_neighbors(pos):
+		if board[n.x][n.y] == "NEUTRAL":
+			print("yes")
+			return true
+		var n_group = get_group_id(n, board[n.x][n.y])
+		if board[n.x][n.y] == team && (pos_deg_liberte[team][n_group].size() > 1):
+			return true
+			
+		if board[n.x][n.y] != team:
+			
+			if pos_deg_liberte[team][n_group].size() <= 1:
+				return true
+			
+	return false
 
-func get_all_moves(board:Array, team:String):
+func get_group_id(pos:Vector2i, team:String):
+	for g in groups[team]:
+		if pos in groups[team[g]]:
+			return g
+
+func get_all_moves(board:Array, team:String, adversary:String):
 	
 	move_idx = Vector2i.ZERO
-	var res:Array = []
+	var res:Array[Vector2i] = []
 	
-	while (true):
-		var idx = get_next_move(board)
-		if idx == null: break #always returns: at the end it returns null
-		res.append(idx)
+	for i in board_size.x:
+		for j in board_size.y:
+			var p = Vector2i(i, j)
+			if try_take(board, p, team, adversary):
+				res.append(p)
 	
 	return res
 
@@ -86,6 +106,8 @@ func getHeuristicSortedList(moves:Array[Vector2i], board:Array, team:String):
 	var heuristics:Array[float] = []
 	for move in moves: heuristics.append(heuristic(move))
 
+
+#FIXME : peut-être passer les dicos en paramètre pour pouvoir les dupliquer en fonction de la récursion ?
 func montecarlo(board:Array):
 	var time:int = Time.get_ticks_msec()
 	
@@ -93,7 +115,7 @@ func montecarlo(board:Array):
 	var best_move:Vector2i = Vector2i(-1, -1)
 	#printboard((board))
 	
-	var moves:Array = get_all_moves(board, team)
+	var moves:Array[Vector2i] = get_all_moves(board, team, adversary)
 	if moves.is_empty(): return best_move
 	
 	var to_try = choose_moves(max_test, moves, board, team)
@@ -107,11 +129,40 @@ func montecarlo(board:Array):
 			best_move = move
 	print ("playing ", best_move, " with value ", value, " (decided in ",Time.get_ticks_msec() - time, "ms).")
 	return best_move
+	
+func is_eye(board:Array, pos:Vector2i, team:String) -> bool:
+	var neighbors = get_neighbors(pos)
+	for n in neighbors:
+		if board[pos.x][pos.y] != team:
+			return false
+	return true
+
+func has_created_eye(board:Array, pos:Vector2i, team:String) -> bool:
+	for n in get_neighbors(pos):
+		if is_eye(board, n, team):
+			return true
+	return false
+	
+func take_enemy(board:Array, pos:Vector2i, team:String, adversary:String):
+	var res = 0
+	for n in get_neighbors(pos):
+		if board[n.x][n.y] == adversary:
+			var n_group = get_group_id(n, adversary)
+			if pos_deg_liberte[n_group].size() == 1 && pos_deg_liberte[n_group][0] == pos:
+				res += groups[adversary][n_group].size()
+	
+func evaluate_move(board:Array, pos:Vector2i, team:String, adversary:String) -> int:
+	var res = 0
+	if has_created_eye(board, pos, team):
+		res += 2
+	res += take_enemy(board, pos, team, adversary)
+	return res
 
 func montecarlo_rec(board:Array, depth:int, my_turn:bool, last_move:Vector2i):
+	print("ok on est dans montecarlo_rec !!!!")
 	var best_move:Vector2i = Vector2i(-1, -1)
 	var value:float = -9999.0
-	var moves:Array = get_all_moves(board, team)
+	var moves:Array = get_all_moves(board, team, adversary)
 	if moves.is_empty(): return best_move
 	
 	var to_try = choose_moves(max_test, moves, board, team)

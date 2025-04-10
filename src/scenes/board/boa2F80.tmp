@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b4ei8rii3s46p"]
+[gd_scene load_steps=18 format=3 uid="uid://b4ei8rii3s46p"]
 
 [ext_resource type="Script" path="res://src/scenes/board/board.gd" id="1_uoraa"]
 [ext_resource type="Script" path="res://src/classes/player.gd" id="2_6ai7i"]
@@ -7,10 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://b2ve3jbgajvf7" path="res://src/scenes/Text/text.tscn" id="4_n5b7x"]
 [ext_resource type="FontFile" uid="uid://yvflshvt4htr" path="res://resources/pixeltype.ttf" id="6_hjuy0"]
 [ext_resource type="Texture2D" uid="uid://bdk1mwdtb2fbb" path="res://resources/images/dog_town.png" id="6_u5a14"]
-[ext_resource type="AudioStream" uid="uid://bow8i2nx03fwj" path="res://resources/sons/woof.ogg" id="8_eeu55"]
-[ext_resource type="AudioStream" uid="uid://dwcg8uoggpc8o" path="res://resources/sons/menu.ogg" id="8_qbf45"]
-[ext_resource type="AudioStream" uid="uid://jjmmwtovxn8n" path="res://resources/sons/chase.mp3" id="10_ex3ts"]
-[ext_resource type="AudioStream" uid="uid://dqu10trofgmjv" path="res://resources/sons/marshall.mp3" id="11_7wsgl"]
 
 [sub_resource type="Resource" id="Resource_sal3q"]
 script = ExtResource("2_6ai7i")
@@ -373,38 +369,7 @@ position = Vector2(221, 55)
 scale = Vector2(7.28125, 3.35938)
 texture = SubResource("GradientTexture2D_3vqss")
 
-[node name="Menu" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("8_qbf45")
-
-[node name="Woof" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("8_eeu55")
-volume_db = -20.0
-
-[node name="Chase_audio" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(1479, 619)
-stream = ExtResource("10_ex3ts")
-volume_db = -5.0
-
-[node name="Marshall_audio" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("11_7wsgl")
-volume_db = -5.0
-
-[node name="Silence" type="Button" parent="."]
-texture_filter = 1
-offset_left = 123.0
-offset_top = 919.0
-offset_right = 359.0
-offset_bottom = 984.0
-theme_override_fonts/font = ExtResource("6_hjuy0")
-theme_override_font_sizes/font_size = 36
-text = "Silence !"
-
-[connection signal="mouse_entered" from="pass" to="." method="_on_pass_mouse_entered"]
 [connection signal="pressed" from="pass" to="." method="_on_pass_pressed"]
-[connection signal="mouse_entered" from="show_board" to="." method="_on_show_board_mouse_entered"]
 [connection signal="pressed" from="show_board" to="." method="_on_show_board_pressed"]
-[connection signal="mouse_entered" from="new" to="." method="_on_new_mouse_entered"]
 [connection signal="pressed" from="new" to="." method="_on_new_pressed"]
-[connection signal="mouse_entered" from="exit" to="." method="_on_exit_mouse_entered"]
 [connection signal="pressed" from="exit" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="Silence" to="." method="_on_silence_pressed"]
