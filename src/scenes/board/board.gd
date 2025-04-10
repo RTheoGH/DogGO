@@ -2,8 +2,8 @@ extends Node2D
 
 const SQUARE = preload("res://src/scenes/square/square.tscn")
 
-const square_size := 125
-var goban_size := 7
+var square_size := 125
+var goban_size := Gamemaster.boardsize
 var map_size := Vector2i(goban_size, goban_size)
 const winning_length:int = 3
 var current_id:Dictionary = {"x":0, "o":0} # Pour incrémenter le numéro du groupe quand on pose une pierre 
@@ -45,10 +45,14 @@ func _ready() -> void:
 	$win.hide()
 	$show_board.hide()
 	$squares.show()
+	print("boardsize : ",Gamemaster.boardsize)
 	if Gamemaster.players.is_empty():
 		Gamemaster.players.append(player_1)
 		Gamemaster.players.append(player_2)
 	Gamemaster.board_node = self
+	
+	square_size = 125 * (7.0 / Gamemaster.boardsize)
+	
 	for i in map_size.x:
 		grid.append([])
 		var row := VBoxContainer.new()
@@ -194,6 +198,7 @@ func _on_pass_pressed() -> void:
 	elif tour == "x":
 		$Marshall/Text.show_pass()
 	Gamemaster.current_player._finish_turn()
+	show_turn_message()
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()
@@ -225,9 +230,9 @@ func announce_winner():
 	$squares.hide()
 	
 	if list_pions[0] > list_pions[1]:
-		text = "[center]Tu gagnes !"
+		text = "[center][color=red]Marshall[color=black] gagne !"
 	elif list_pions[0] < list_pions[1]:
-		text = "[center]ChAIse gagne !"
+		text = "[center][color=blue]Chase[color=black] gagne !"
 	else:
 		text = "[center]Match nul !"
 	$win/win_text.text = text
@@ -254,3 +259,14 @@ func _on_show_board_pressed() -> void:
 		$win.hide()
 	else:
 		$win.show()
+		
+func show_turn_message():
+	var tour = Gamemaster.current_player.team
+	
+	print(tour)
+	if tour == "o":
+		$turn/turn_text.text = "[center]C'est au tour de [color=blue]Chase[color=black] de jouer"
+	elif tour == "x":
+		$turn/turn_text.text = "[center]C'est au tour de [color=red]Marshall[color=black] de jouer"
+	else:
+		$turn/turn_text.text = "Erreur tour"
