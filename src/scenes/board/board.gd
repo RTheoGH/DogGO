@@ -6,6 +6,9 @@ const square_size := 125
 var goban_size := 7
 var map_size := Vector2i(goban_size, goban_size)
 const winning_length:int = 3
+var current_id:Dictionary = {"x":0, "o":0} # Pour incrémenter le numéro du groupe quand on pose une pierre 
+var pos_deg_liberte:Dictionary = {"x":{}, "o":{}} # Pour un id de groupe, donne la position des libertés
+var groups:Dictionary = {"x":{}, "o":{}} # Pour un id de groupe, donne tous les squares présents dans le groupe
 
 @export var player_1:Player
 @export var player_2:Player
@@ -13,6 +16,7 @@ const winning_length:int = 3
 class Square:
 	var button:Button
 	var team:String
+	var group_id:String
 		
 	func _init(button) -> void:
 		self.button = button
@@ -38,6 +42,9 @@ var grid:Array[Array] #[[Square]]
 func _ready() -> void:
 	$new.hide()
 	$exit.hide()
+	$win.hide()
+	$show_board.hide()
+	$squares.show()
 	Gamemaster.players.append(player_1)
 	Gamemaster.players.append(player_2)
 	Gamemaster.board_node = self
@@ -64,31 +71,60 @@ func clear_all(surrounded_list:Array):
 		grid[p.x][p.y].clear()
 		print(p, "  TAKEN")
 
-func try_take(pos:Vector2i, try:bool = false) -> bool:
+#func try_take(pos:Vector2i, try:bool = false) -> bool:
+	#for n in get_neighbors(pos):
+		#print(n)
+	#var surrounded_list:Array = []
+	#if grid[pos.x][pos.y].is_free():
+		#var other_player:Player = Gamemaster.players[(Gamemaster.current_player_index+1)%2]
+		#
+		#if !surrounded_iter(pos, Gamemaster.current_player.team, surrounded_list):
+			#if !try:
+				#grid[pos.x][pos.y].take(Gamemaster.current_player)
+		#else:
+			#return false
+		#
+		#for n in get_neighbors(pos):
+			#if grid[n .x][n .y].team == "NEUTRAL": continue
+			#if grid[n.x][n.y].team == Gamemaster.current_player.team: continue
+			#surrounded_list = []
+			#var v := surrounded_iter(n, other_player.team, surrounded_list)
+			#if v:
+				#if !try:
+					#clear_all(surrounded_list)
+		#if !try:
+			#check_win_condition(pos)
+		#return true
+	#return false
+
+func try_take(pos:Vector2i) -> bool:
 	for n in get_neighbors(pos):
-		print(n)
-	var surrounded_list:Array = []
-	if grid[pos.x][pos.y].is_free():
-		var other_player:Player = Gamemaster.players[(Gamemaster.current_player_index+1)%2]
-		
-		if !surrounded_iter(pos, Gamemaster.current_player.team, surrounded_list):
-			if !try:
-				grid[pos.x][pos.y].take(Gamemaster.current_player)
+		if grid[n.x][n.y].team == "NEUTRAL":
+			return true
+		elif grid[n.x][n.y].team == Gamemaster.current_player.team:
+			if !(pos_deg_liberte[grid[n.x][n.y].team][grid[n.x][n.y].group_id].size() == 1 && pos_deg_liberte[grid[n.x][n.y].team][grid[n.x][n.y].group_id][0] == pos):
+				return false
+	return true
+
+func take(pos:Vector2i):
+	print(grid[pos.x][pos.y].group_id)
+	grid[pos.x][pos.y].take(Gamemaster.current_player)
+	grid[pos.x][pos.y].group_id = str(current_id[Gamemaster.current_player.team])
+	pos_deg_liberte[Gamemaster.current_player.team][str(current_id[Gamemaster.current_player.team])] = []
+	pos_deg_liberte[Gamemaster.current_player.team][str(current_id[Gamemaster.current_player.team])].append(pos)
+	for n in get_neighbors(pos):
+		print(grid[n.x][n.y].team)
+		if grid[n.x][n.y].team == "NEUTRAL" : 
+			if n not in pos_deg_liberte[Gamemaster.current_player.team][grid[pos.x][pos.y].group_id]:
+				pos_deg_liberte[Gamemaster.current_player.team][grid[pos.x][pos.y].group_id].append(n)
+		elif grid[n.x][n.y].team == Gamemaster.current_player.team:
+			groups[Gamemaster.current_player.team][grid[pos.x][pos.y].group_id] = pos
+			groups[grid[n.x][n.y].team].erase(grid[n.x][n.y].group_id)
+			for g in groups[grid[n.x][n.y].team][current_id[grid[n.x][n.y].team]]:
+				grid[g.x][g.y].group_id = grid[pos.x][pos.y].group_id
 		else:
-			return false
-		
-		for n in get_neighbors(pos):
-			if grid[n .x][n .y].team == "NEUTRAL": continue
-			if grid[n.x][n.y].team == Gamemaster.current_player.team: continue
-			surrounded_list = []
-			var v := surrounded_iter(n, other_player.team, surrounded_list)
-			if v:
-				if !try:
-					await clear_all(surrounded_list)
-		if !try:
-			check_win_condition(pos)
-		return true
-	return false
+			pos_deg_liberte[grid[n.x][n.y].team][grid[n.x][n.y].group_id].erase(n)
+	current_id[Gamemaster.current_player.team] += 1
 	
 func get_neighbors(pos:Vector2i):
 	var neighbors = []
@@ -170,8 +206,7 @@ func check_win_condition(pos:Vector2i):
 					nb_pierre_2 += 1
 		var winner = player_1 if nb_pierre_1 > nb_pierre_2 else player_2
 		Gamemaster.win(winner)
-		$exit.show()
-		$new.show()
+		announce_winner()
 		#$squares.hide()
 	## lines
 	#var count := 1
@@ -237,16 +272,67 @@ func check_win_condition(pos:Vector2i):
 func _on_pass_pressed() -> void:
 	var tour = Gamemaster.current_player.team
 	if tour == "O":
-		$Text.show_pass()
+		$Chase/Text.show_pass()
 	else:
-		$Text2.show_pass()
+		$Marshall/Text.show_pass()
 	Gamemaster.current_player._finish_turn()
-
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()
 
-
 func _on_new_pressed() -> void:
 	Gamemaster.restart_with_same_settings()
 	#$squares.show()
+
+func get_nb_pions_placed():
+	var cpt_chase = 0
+	var cpt_marshall = 0
+	for i in map_size.x:
+		for j in map_size.y:
+			if grid[i][j].team == "x":
+				cpt_marshall += 1
+			if grid[i][j].team == "o":
+				cpt_chase += 1
+				
+	return [cpt_marshall,cpt_chase]
+	
+func update_nb_pions_placed():
+	var list_pions = get_nb_pions_placed()
+	$Chase/ColorRect2/Chase_cpt.text = str("[center]",list_pions[1])
+	$Marshall/ColorRect2/Marshall_cpt.text = str("[center]",list_pions[0])
+
+func announce_winner():
+	var text = ""
+	var list_pions = get_nb_pions_placed()
+	$squares.hide()
+	
+	if list_pions[0] > list_pions[1]:
+		text = "[center]Tu gagnes !"
+	elif list_pions[0] < list_pions[1]:
+		text = "[center]ChAIse gagne !"
+	else:
+		text = "[center]Match nul !"
+	$win/win_text.text = text
+	$win.show()
+	$exit.show()
+	$new.show()
+	$show_board.show()
+
+func _on_show_board_pressed() -> void:
+	if $show_board.text == "Cache la grille":
+		$show_board.text = "Affiche la grille"
+	else:
+		$show_board.text = "Cache la grille"
+		
+	print($squares.is_visible())
+	print($win.is_visible())
+	
+	if $squares.is_visible():
+		$squares.hide()
+	else:
+		$squares.show()
+	
+	if $win.is_visible():
+		$win.hide()
+	else:
+		$win.show()

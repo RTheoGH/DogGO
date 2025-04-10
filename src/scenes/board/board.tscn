@@ -52,19 +52,17 @@ offset_right = 1897.0
 offset_bottom = 690.0
 theme_override_fonts/font = ExtResource("6_hjuy0")
 theme_override_font_sizes/font_size = 36
-text = "Pass"
+text = "Je passe !"
 
-[node name="Chase" type="Sprite2D" parent="."]
+[node name="show_board" type="Button" parent="."]
 texture_filter = 1
-position = Vector2(231, 281)
-scale = Vector2(2.54081, 2.36203)
-texture = ExtResource("3_s857l")
-
-[node name="marshall" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(1718, 289)
-scale = Vector2(3.09127, 3.09127)
-texture = ExtResource("4_if2mg")
+offset_left = 1479.0
+offset_top = 619.0
+offset_right = 1687.0
+offset_bottom = 690.0
+theme_override_fonts/font = ExtResource("6_hjuy0")
+theme_override_font_sizes/font_size = 36
+text = "Affiche la grille"
 
 [node name="fond" type="Sprite2D" parent="."]
 z_index = -1
@@ -72,12 +70,6 @@ texture_filter = 1
 position = Vector2(960, 539.5)
 scale = Vector2(1.875, 2.03598)
 texture = ExtResource("6_u5a14")
-
-[node name="Text" parent="." instance=ExtResource("4_n5b7x")]
-position = Vector2(270, 134)
-
-[node name="Text2" parent="." instance=ExtResource("4_n5b7x")]
-position = Vector2(1558, 154)
 
 [node name="new" type="Button" parent="."]
 texture_filter = 1
@@ -87,7 +79,7 @@ offset_right = 1896.0
 offset_bottom = 976.0
 theme_override_fonts/font = ExtResource("6_hjuy0")
 theme_override_font_sizes/font_size = 36
-text = "Another round !"
+text = "Encore une partie !"
 
 [node name="exit" type="Button" parent="."]
 texture_filter = 1
@@ -97,42 +89,147 @@ offset_right = 1897.0
 offset_bottom = 1051.0
 theme_override_fonts/font = ExtResource("6_hjuy0")
 theme_override_font_sizes/font_size = 36
-text = "Exit"
+text = "Fermez le jeu"
 
-[node name="Chase_name" type="RichTextLabel" parent="."]
+[node name="CPT_pion1" type="RichTextLabel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CPT_pion2" type="RichTextLabel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Chase" type="Node2D" parent="."]
+position = Vector2(192, 374)
+
+[node name="Chase_sprite" type="Sprite2D" parent="Chase"]
+texture_filter = 1
+position = Vector2(39, -93)
+scale = Vector2(2.54081, 2.36203)
+texture = ExtResource("3_s857l")
+
+[node name="Text" parent="Chase" instance=ExtResource("4_n5b7x")]
+position = Vector2(78, -240)
+
+[node name="ColorRect" type="ColorRect" parent="Chase"]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 81.0
+offset_bottom = 36.0
+
+[node name="Chase_name" type="RichTextLabel" parent="Chase/ColorRect"]
 z_index = 1
-offset_left = 201.0
-offset_top = 377.0
-offset_right = 285.0
-offset_bottom = 410.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 8.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("6_hjuy0")
 theme_override_font_sizes/normal_font_size = 32
-text = "ChAIse"
+bbcode_enabled = true
+text = "[center]chAIse"
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = 194.0
-offset_top = 369.0
-offset_right = 274.0
-offset_bottom = 404.0
+[node name="ColorRect2" type="ColorRect" parent="Chase"]
+offset_left = 1.0
+offset_top = 42.0
+offset_right = 80.0
+offset_bottom = 72.0
 
-[node name="Marshall_name" type="RichTextLabel" parent="."]
-z_index = 1
-offset_left = 1706.0
-offset_top = 396.0
-offset_right = 1748.0
-offset_bottom = 417.0
+[node name="Chase_cpt" type="RichTextLabel" parent="Chase/ColorRect2"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 7.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("6_hjuy0")
 theme_override_font_sizes/normal_font_size = 32
-text = "YOU"
+bbcode_enabled = true
+text = "[center]0"
 
-[node name="ColorRect2" type="ColorRect" parent="."]
-offset_left = 1690.0
-offset_top = 389.0
-offset_right = 1757.0
-offset_bottom = 419.0
+[node name="Marshall" type="Node2D" parent="."]
+position = Vector2(1690, 389)
+
+[node name="Marshall_sprite" type="Sprite2D" parent="Marshall"]
+texture_filter = 1
+position = Vector2(28, -100)
+scale = Vector2(3.09127, 3.09127)
+texture = ExtResource("4_if2mg")
+
+[node name="Text" parent="Marshall" instance=ExtResource("4_n5b7x")]
+position = Vector2(-132, -235)
+
+[node name="ColorRect" type="ColorRect" parent="Marshall"]
+offset_right = 67.0
+offset_bottom = 30.0
+
+[node name="Marshall_name" type="RichTextLabel" parent="Marshall/ColorRect"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 7.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("6_hjuy0")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[center]TOI"
+
+[node name="ColorRect2" type="ColorRect" parent="Marshall"]
+offset_left = 1.0
+offset_top = 42.0
+offset_right = 66.0
+offset_bottom = 68.0
+
+[node name="Marshall_cpt" type="RichTextLabel" parent="Marshall/ColorRect2"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 5.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("6_hjuy0")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[center]0"
+
+[node name="win" type="ColorRect" parent="."]
+offset_left = 781.0
+offset_top = 461.0
+offset_right = 1137.0
+offset_bottom = 587.0
+
+[node name="win_text" type="RichTextLabel" parent="win"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 37.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("6_hjuy0")
+theme_override_font_sizes/normal_font_size = 76
+bbcode_enabled = true
 
 [connection signal="pressed" from="pass" to="." method="_on_pass_pressed"]
+[connection signal="pressed" from="show_board" to="." method="_on_show_board_pressed"]
 [connection signal="pressed" from="new" to="." method="_on_new_pressed"]
 [connection signal="pressed" from="exit" to="." method="_on_exit_pressed"]
