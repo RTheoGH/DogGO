@@ -4,7 +4,7 @@ signal turn_finished
 
 var board_node:Node
 var players = []
-var boardsize
+var boardsize:int = 7
 
 var game_on:bool
 var can_play := true
@@ -20,6 +20,7 @@ var current_player_index:int
 var current_player:Player
 
 func launch_game():
+	print("in gamemaster boardsize :",boardsize)
 	current_player_index = 0
 	can_play = true
 	game_on = true
@@ -28,6 +29,7 @@ func launch_game():
 		await next_turn()
 
 func next_turn():
+	board_node.show_turn_message()
 	can_play = false
 	await get_tree().create_timer(0.5).timeout
 	print("Playing: ", current_player.name)

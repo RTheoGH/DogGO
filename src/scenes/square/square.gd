@@ -2,6 +2,10 @@ extends Button
 
 var board:Node2D
 var grid_position:Vector2i
+var scale_factor := 1.0
+var base_pos:Vector2
+func _ready() -> void:
+	_on_minimum_size_changed()
 
 func _on_pressed() -> void:
 	if Gamemaster.current_player != null:
@@ -36,7 +40,7 @@ func animate():
 	tween.tween_property(
 		$Node2D,
 		"position",
-		Vector2(0, 0),
+		base_pos,
 		0.4
 		).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	tween.parallel()
@@ -71,7 +75,8 @@ func clear():
 
 func _on_minimum_size_changed() -> void:
 	$Node2D.scale = Vector2.ONE * 0.5 * (custom_minimum_size.y / 50.0)
-	$Node2D.position = custom_minimum_size/2.0
+	base_pos = custom_minimum_size/2.0
+	
 
 func _draw():
 	var couleur = Color(1.0,1.0,1.0,0.25)
