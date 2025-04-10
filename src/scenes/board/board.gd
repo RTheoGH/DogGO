@@ -78,10 +78,7 @@ func clear_all(team:String, group_id:int):
 				pos_deg_liberte[n_team][n_id].append(p)
 		
 		grid[p.x][p.y].clear()
-		print(p, "  TAKEN")
-		
-		
-		
+	
 	groups[team].erase(group_id)
 	pos_deg_liberte[team].erase(group_id)
 
@@ -93,7 +90,6 @@ func try_take(pos:Vector2i) -> bool:
 			return true
 		elif grid[n.x][n.y].team == Gamemaster.current_player.team && (pos_deg_liberte[Gamemaster.current_player.team][grid[n.x][n.y].group_id].size() > 1):
 			return true
-			
 			
 		elif grid[n.x][n.y].team != Gamemaster.current_player.team:
 			
@@ -133,14 +129,20 @@ func take(pos:Vector2i):
 				grid[g.x][g.y].group_id = grid[pos.x][pos.y].group_id
 				groups[curr_team][grid[pos.x][pos.y].group_id].append(g)
 			groups[n_team].erase(n_id)
+			pos_deg_liberte[n_team].erase(n_id)
+			
 		else:
 			pos_deg_liberte[n_team][n_id].erase(pos)
 			if pos_deg_liberte[n_team][n_id].is_empty():
-				clear_all(n_team, n_id)
-				
+				await clear_all(n_team, n_id)
+				pos_deg_liberte[n_team].erase(n_id)
 	current_id[curr_team] += 1
-	
-	
+	print("les tailels en o: ")
+	for i in pos_deg_liberte["o"].keys():
+		print(i, " ", pos_deg_liberte["o"][i].size())
+	print("les tailles en x: ")
+	for i in pos_deg_liberte["x"].keys():
+		print(i, " ", pos_deg_liberte["x"][i].size())
 
 func get_neighbors(pos:Vector2i):
 	var neighbors = []
@@ -206,10 +208,8 @@ func get_nb_pions_placed():
 	for i in map_size.x:
 		for j in map_size.y:
 			if grid[i][j].team == "x":
-				print("marshall ++")
 				cpt_marshall += 1
 			if grid[i][j].team == "o":
-				print("chase ++")
 				cpt_chase += 1
 				
 	return [cpt_marshall,cpt_chase]
