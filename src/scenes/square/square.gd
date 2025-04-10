@@ -80,7 +80,11 @@ func _on_minimum_size_changed() -> void:
 
 func _draw():
 	var couleur = Color(1.0,1.0,1.0,0.25)
-	draw_rect(Rect2(0.0,0.0,129.0,129.0),couleur)
-	draw_line(Vector2(60,0),Vector2(60,129),Color.BLACK,5.0)
-	draw_line(Vector2(0,60),Vector2(129,60),Color.BLACK,5.0)
-	#draw_rect(Rect2(10.0, 10.0, 100.0, 100.0), Color.RED)
+	
+	var zone = custom_minimum_size.y
+	draw_rect(Rect2(0.0,0.0,zone+4,zone+4),couleur)
+	
+	var centre = zone / 2.0
+	
+	draw_line(Vector2(centre,0),Vector2(centre,zone+4),Color.BLACK,5.0)
+	draw_line(Vector2(0,centre),Vector2(zone+4,centre),Color.BLACK,5.0)

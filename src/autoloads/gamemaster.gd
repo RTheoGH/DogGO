@@ -52,4 +52,4 @@ func restart_with_same_settings():
 
 func to_menu():
 	game_on = false
-	get_tree().change_scene_to_packed(preload("res://src/scenes/UI/MainMenu.tscn"))
+	get_tree().change_scene_to_packed(preload("res://src/scenes/UI/mainmenue.tscn"))
