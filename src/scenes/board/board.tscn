@@ -127,7 +127,7 @@ scale = Vector2(1.45746, 1.27671)
 texture = SubResource("GradientTexture2D_3vqss")
 
 [node name="Text" parent="Chase" instance=ExtResource("4_n5b7x")]
-position = Vector2(78, -240)
+position = Vector2(105, -219)
 
 [node name="ColorRect" type="ColorRect" parent="Chase"]
 offset_left = 1.0
@@ -149,7 +149,7 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("6_hjuy0")
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
-text = "[center]chAIse"
+text = "[center]Chase"
 
 [node name="ColorRect2" type="ColorRect" parent="Chase"]
 offset_left = 1.0
@@ -193,7 +193,8 @@ texture = SubResource("GradientTexture2D_3vqss")
 position = Vector2(-132, -235)
 
 [node name="ColorRect" type="ColorRect" parent="Marshall"]
-offset_right = 67.0
+offset_left = -11.0
+offset_right = 78.0
 offset_bottom = 30.0
 
 [node name="Marshall_name" type="RichTextLabel" parent="Marshall/ColorRect"]
@@ -210,7 +211,7 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("6_hjuy0")
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
-text = "[center]TOI"
+text = "[center]Marshall"
 
 [node name="ColorRect2" type="ColorRect" parent="Marshall"]
 offset_left = 1.0

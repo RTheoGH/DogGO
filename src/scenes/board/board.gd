@@ -111,6 +111,7 @@ func take(pos:Vector2i):
 	pos_deg_liberte[curr_team][curr_id] = []
 	groups[curr_team][ curr_id ] = [pos]
 	
+	update_nb_pions_placed()
 	
 	var enemy_groups_surrounded := []
 	for n in get_neighbors(pos):
@@ -185,9 +186,10 @@ func check_win_condition(pos:Vector2i):
 
 func _on_pass_pressed() -> void:
 	var tour = Gamemaster.current_player.team
-	if tour == "O":
+	print(tour)
+	if tour == "o":
 		$Chase/Text.show_pass()
-	else:
+	elif tour == "x":
 		$Marshall/Text.show_pass()
 	Gamemaster.current_player._finish_turn()
 
@@ -204,8 +206,10 @@ func get_nb_pions_placed():
 	for i in map_size.x:
 		for j in map_size.y:
 			if grid[i][j].team == "x":
+				print("marshall ++")
 				cpt_marshall += 1
 			if grid[i][j].team == "o":
+				print("chase ++")
 				cpt_chase += 1
 				
 	return [cpt_marshall,cpt_chase]
