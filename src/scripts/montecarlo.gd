@@ -50,26 +50,25 @@ func get_next_move(board:Array):
 
 func get_neighbors(pos:Vector2i):
 	var neighbors = []
-	assert(board_size[0] >= 2, "minimum size : 2")
+	assert(board_size.x >= 2, "minimum size : 2")
 	
-	for v in [Vector2i(pos.x+1, pos.y), Vector2i(pos.x-1, pos.y), Vector2i(pos.x, pos.y+1), Vector2i(pos.x, pos.y-1),]:
-		if 0 <= v.x && v.x <= board_size.x-1 && 0 <= v.y && v.y <= board_size.x-1:
+	for v in [Vector2i(pos.x+1, pos.y), Vector2i(pos.x-1, pos.y), Vector2i(pos.x, pos.y+1), Vector2i(pos.x, pos.y-1)]:
+		if 0 <= v.x && v.x <= board_size.x-1 && 0 <= v.y && v.y <= board_size.y-1:
 			neighbors.push_back(v)
 	return neighbors
 	
 func try_take(board:Array, pos:Vector2i, team:String, adversary:String) -> bool:
 	if board[pos.x][pos.y] != "NEUTRAL": return false
 	for n in get_neighbors(pos):
+		
 		if board[n.x][n.y] == "NEUTRAL":
-			print("yes")
 			return true
 		var n_group = get_group_id(n, board[n.x][n.y])
 		if board[n.x][n.y] == team && (pos_deg_liberte[team][n_group].size() > 1):
 			return true
 			
 		if board[n.x][n.y] != team:
-			
-			if pos_deg_liberte[team][n_group].size() <= 1:
+			if pos_deg_liberte[adversary][n_group].size() <= 1:
 				return true
 			
 	return false
@@ -80,12 +79,10 @@ func get_group_id(pos:Vector2i, team:String):
 			return g
 
 func get_all_moves(board:Array, team:String, adversary:String):
-	
-	move_idx = Vector2i.ZERO
 	var res:Array[Vector2i] = []
 	
-	for i in board_size.x:
-		for j in board_size.y:
+	for i in range(board_size.x-1):
+		for j in range(board_size.y-1):
 			var p = Vector2i(i, j)
 			if try_take(board, p, team, adversary):
 				res.append(p)

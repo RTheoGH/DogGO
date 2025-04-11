@@ -164,6 +164,7 @@ func get_neighbors(pos:Vector2i):
 	for v in [Vector2i(pos.x+1, pos.y), Vector2i(pos.x-1, pos.y), Vector2i(pos.x, pos.y+1), Vector2i(pos.x, pos.y-1),]:
 		if 0 <= v.x && v.x <= goban_size-1 && 0 <= v.y && v.y <= goban_size-1:
 			neighbors.push_back(v)
+	print(neighbors)
 	return neighbors
 
 func preview():
