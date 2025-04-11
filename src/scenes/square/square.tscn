@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://x08ghaei2hdb"]
+[gd_scene load_steps=8 format=3 uid="uid://x08ghaei2hdb"]
 
 [ext_resource type="Script" path="res://src/scenes/square/square.gd" id="1_jrr86"]
 [ext_resource type="Texture2D" uid="uid://cs1yqiple4i24" path="res://resources/images/chase.png" id="2_g6elq"]
 [ext_resource type="Texture2D" uid="uid://bbqm73ysm46h2" path="res://resources/images/neutral.png" id="2_itwpy"]
 [ext_resource type="Texture2D" uid="uid://buut74wa6585s" path="res://resources/images/marshall.png" id="4_ca5ne"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_frjb3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4v2y8"]
 atlas = ExtResource("2_itwpy")
@@ -44,6 +46,8 @@ anchor_right = 0.026
 anchor_bottom = 0.046
 offset_right = 0.079998
 offset_bottom = 0.319996
+theme_override_constants/outline_size = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_frjb3")
 flat = true
 script = ExtResource("1_jrr86")
 
