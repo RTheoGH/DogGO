@@ -43,13 +43,16 @@ horizontal_alignment = 1
 [node name="Back" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.229687
-anchor_top = 0.709
-anchor_right = 0.405687
-anchor_bottom = 0.844
-offset_top = 0.279968
-offset_right = 0.0799561
-offset_bottom = 0.47998
+anchor_left = 0.356
+anchor_top = 0.811815
+anchor_right = 0.648
+anchor_bottom = 0.900593
+offset_left = -0.52002
+offset_top = 0.239929
+offset_right = -0.160034
+offset_bottom = 0.359985
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_et1p1")
 theme_override_font_sizes/font_size = 66
 text = "Back"
@@ -58,10 +61,10 @@ metadata/_edit_use_anchors_ = true
 [node name="BoardSize" type="OptionButton" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.450979
-anchor_top = 0.514704
-anchor_right = 0.575979
-anchor_bottom = 0.577704
+anchor_left = 0.427542
+anchor_top = 0.436926
+anchor_right = 0.575458
+anchor_bottom = 0.499926
 offset_left = -0.880066
 offset_top = 4.11993
 offset_right = -0.880127
@@ -79,28 +82,67 @@ metadata/_edit_use_anchors_ = true
 [node name="Label" type="Label" parent="BoardSize"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.00383331
-anchor_top = -0.544118
-anchor_right = 1.012
-anchor_bottom = -0.088118
+anchor_left = -0.00028171
+anchor_top = -0.470589
+anchor_right = 0.999578
+anchor_bottom = 0.000115997
 offset_left = 0.0800056
 offset_top = 3.05176e-05
-offset_right = 0.11998
-offset_bottom = -0.00796795
+offset_right = 0.119812
+offset_bottom = -0.00788783
 theme_override_fonts/font = ExtResource("2_et1p1")
 theme_override_font_sizes/font_size = 44
-text = "Select Board Size:
-"
+text = "Taille de plateau"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="BoardSize2" type="OptionButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.427542
+anchor_top = 0.561
+anchor_right = 0.575458
+anchor_bottom = 0.624
+offset_left = -0.880066
+offset_top = 4.11993
+offset_right = -0.880127
+offset_bottom = 4.08002
+theme_override_fonts/font = ExtResource("2_et1p1")
+theme_override_font_sizes/font_size = 55
+alignment = 1
+selected = 0
+item_count = 3
+popup/item_0/text = "12"
+popup/item_1/text = "25"
+popup/item_1/id = 1
+popup/item_2/text = "50"
+popup/item_2/id = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="BoardSize2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.00028171
+anchor_top = -0.470589
+anchor_right = 0.999578
+anchor_bottom = 0.000115997
+offset_left = 0.0800056
+offset_top = 3.05176e-05
+offset_right = 0.119812
+offset_bottom = -0.00788783
+theme_override_fonts/font = ExtResource("2_et1p1")
+theme_override_font_sizes/font_size = 44
+text = "Nombre de pierres"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Launch" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.595667
-anchor_top = 0.705889
-anchor_right = 0.775146
-anchor_bottom = 0.840741
+anchor_left = 0.356083
+anchor_top = 0.693852
+anchor_right = 0.648063
+anchor_bottom = 0.775926
 offset_left = -0.680054
 offset_top = -12.36
 offset_right = -0.280029
@@ -196,6 +238,7 @@ stream = ExtResource("6_q8xh0")
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
 [connection signal="item_selected" from="BoardSize" to="." method="_on_board_size_item_selected"]
 [connection signal="mouse_entered" from="BoardSize" to="." method="_on_board_size_mouse_entered"]
+[connection signal="mouse_entered" from="BoardSize2" to="." method="_on_board_size_mouse_entered"]
 [connection signal="mouse_entered" from="Launch" to="." method="_on_launch_mouse_entered"]
 [connection signal="pressed" from="Launch" to="." method="_on_launch_pressed"]
 [connection signal="item_selected" from="player1Options/Player1Selection" to="." method="_on_select_player_item_selected"]

@@ -70,6 +70,7 @@ func _ready() -> void:
 			row.add_child(new_square)
 			
 			grid[i].append(Square.new(new_square))
+	update_nb_pions_placed()
 	Gamemaster.launch_game()
 
 func clear_all(team:String, group_id:int):
@@ -89,6 +90,8 @@ func clear_all(team:String, group_id:int):
 	pos_deg_liberte[team].erase(group_id)
 
 func try_take(pos:Vector2i) -> bool:
+	if Gamemaster.current_player.nb_pierres == 0: return false
+	
 	if grid[pos.x][pos.y].team != "NEUTRAL": return false
 	for n in get_neighbors(pos):
 		if grid[n.x][n.y].team == "NEUTRAL":
@@ -112,7 +115,6 @@ func take(pos:Vector2i):
 	pos_deg_liberte[curr_team][curr_id] = []
 	groups[curr_team][ curr_id ] = [pos]
 	
-	update_nb_pions_placed()
 	if Gamemaster.current_player.team == "o":
 		$Chase_audio.play()
 	elif Gamemaster.current_player.team == "x":
@@ -148,12 +150,14 @@ func take(pos:Vector2i):
 				
 			
 	current_id[curr_team] += 1
-	print("les tailels en o: ")
-	for i in pos_deg_liberte["o"].keys():
-		print(i, " ", pos_deg_liberte["o"][i].size(), " ", pos_deg_liberte["o"][i])
-	print("les tailles en x: ")
-	for i in pos_deg_liberte["x"].keys():
-		print(i, " ", pos_deg_liberte["x"][i].size(), " ", pos_deg_liberte["x"][i])
+	
+	update_nb_pions_placed()
+	#print("les tailels en o: ")
+	#for i in pos_deg_liberte["o"].keys():
+	#	print(i, " ", pos_deg_liberte["o"][i].size(), " ", pos_deg_liberte["o"][i])
+	#print("les tailles en x: ")
+	#for i in pos_deg_liberte["x"].keys():
+	#	print(i, " ", pos_deg_liberte["x"][i].size(), " ", pos_deg_liberte["x"][i])
 
 func get_neighbors(pos:Vector2i):
 	var neighbors = []
@@ -179,13 +183,13 @@ func preview():
 func check_can_play() -> bool:
 	for i in map_size.x:
 		for j in map_size.y:
-			if await try_take(Vector2i(i, j)):
+			if try_take(Vector2i(i, j)):
 				return true
 	return false
  
-func check_win_condition(pos:Vector2i):
+func check_win_condition():
 	var skip_turn = false # à faire : si les deux joueurs skippent leur tour
-	if((player_1.nb_pierres == 0 and player_2.nb_pierres == 0) or skip_turn or !(await check_can_play())):
+	if((player_1.nb_pierres == 0 and player_2.nb_pierres == 0) or skip_turn or !(check_can_play())):
 		var nb_pierre_1 = 0
 		var nb_pierre_2 = 0
 		for i in map_size.x:
@@ -229,8 +233,11 @@ func get_nb_pions_placed():
 	
 func update_nb_pions_placed():
 	var list_pions = get_nb_pions_placed()
-	$Chase/ColorRect2/Chase_cpt.text = str("[center]",list_pions[1])
-	$Marshall/ColorRect2/Marshall_cpt.text = str("[center]",list_pions[0])
+	$Chase/ColorRect2/Chase_cpt.text = str("[center]Score ",list_pions[1])
+	$Marshall/ColorRect2/Marshall_cpt.text = str("[center]Score ",list_pions[0])
+	
+	$Chase/ColorRect3/chase_restant.text = str("[center]Restant ", Gamemaster.players[0].nb_pierres)
+	$Marshall/ColorRect4/marshall_restant.text = str("[center]Restant ",Gamemaster.players[1].nb_pierres)
 
 func announce_winner():
 	var text = ""
@@ -295,7 +302,7 @@ func _on_show_board_mouse_entered() -> void:
 func _on_silence_pressed() -> void:
 	mute = !mute
 	if mute:
-		$Silence.text = "Revenez !"
+		$Silence.text = "Aboie !"
 	else:
 		$Silence.text = "Silence !"
 	AudioServer.set_bus_mute(bus_idx, mute)

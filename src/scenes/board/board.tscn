@@ -63,8 +63,8 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivehc"]
-bg_color = Color(1, 0.351916, 0.178403, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydhhr"]
+bg_color = Color(1, 0.352941, 0.176471, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -75,8 +75,8 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydhhr"]
-bg_color = Color(1, 0.352941, 0.176471, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivehc"]
+bg_color = Color(1, 0.351916, 0.178403, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -160,10 +160,10 @@ texture = ExtResource("6_u5a14")
 
 [node name="new" type="Button" parent="."]
 texture_filter = 1
-offset_left = 1659.0
-offset_top = 911.0
-offset_right = 1896.0
-offset_bottom = 976.0
+offset_left = 785.0
+offset_top = 619.0
+offset_right = 1133.0
+offset_bottom = 684.0
 theme_override_fonts/font = ExtResource("6_hjuy0")
 theme_override_font_sizes/font_size = 36
 text = "Encore une partie !"
@@ -176,7 +176,7 @@ offset_right = 1897.0
 offset_bottom = 1051.0
 theme_override_fonts/font = ExtResource("6_hjuy0")
 theme_override_font_sizes/font_size = 36
-text = "Fermez le jeu"
+text = "Fermer le jeu"
 
 [node name="CPT_pion1" type="RichTextLabel" parent="."]
 offset_right = 40.0
@@ -206,9 +206,9 @@ texture = SubResource("GradientTexture2D_3vqss")
 position = Vector2(105, -219)
 
 [node name="ColorRect" type="Panel" parent="Chase"]
-offset_left = 1.0
+offset_left = -15.0
 offset_top = 1.0
-offset_right = 81.0
+offset_right = 97.0
 offset_bottom = 36.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_mbx8u")
 
@@ -229,10 +229,10 @@ bbcode_enabled = true
 text = "[center]Chase"
 
 [node name="ColorRect2" type="Panel" parent="Chase"]
-offset_left = 1.0
-offset_top = 42.0
-offset_right = 80.0
-offset_bottom = 72.0
+offset_left = -16.0
+offset_top = 47.0
+offset_right = 97.0
+offset_bottom = 77.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_fk0jn")
 
 [node name="Chase_cpt" type="RichTextLabel" parent="Chase/ColorRect2"]
@@ -249,7 +249,30 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("6_hjuy0")
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
-text = "[center]0"
+text = "[center]Score:  0"
+
+[node name="ColorRect3" type="Panel" parent="Chase"]
+offset_left = -16.0
+offset_top = 87.0
+offset_right = 97.0
+offset_bottom = 117.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_fk0jn")
+
+[node name="chase_restant" type="RichTextLabel" parent="Chase/ColorRect3"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 7.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("6_hjuy0")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[center]Restant:  0"
 
 [node name="Marshall" type="Node2D" parent="."]
 position = Vector2(1690, 389)
@@ -271,9 +294,32 @@ texture = SubResource("GradientTexture2D_3vqss")
 position = Vector2(-154, -218)
 on_right = true
 
+[node name="ColorRect4" type="Panel" parent="Marshall"]
+offset_left = -24.0
+offset_top = 79.0
+offset_right = 89.0
+offset_bottom = 109.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ydhhr")
+
+[node name="marshall_restant" type="RichTextLabel" parent="Marshall/ColorRect4"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 7.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("6_hjuy0")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[center]Restant:  0"
+
 [node name="ColorRect" type="Panel" parent="Marshall"]
-offset_left = -15.0
-offset_right = 78.0
+offset_left = -24.0
+offset_right = 89.0
 offset_bottom = 30.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ivehc")
 
@@ -294,10 +340,10 @@ bbcode_enabled = true
 text = "[center]Marshall"
 
 [node name="ColorRect2" type="Panel" parent="Marshall"]
-offset_left = 1.0
-offset_top = 42.0
-offset_right = 66.0
-offset_bottom = 68.0
+offset_left = -24.0
+offset_top = 39.0
+offset_right = 89.0
+offset_bottom = 69.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ydhhr")
 
 [node name="Marshall_cpt" type="RichTextLabel" parent="Marshall/ColorRect2"]
@@ -314,7 +360,7 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("6_hjuy0")
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
-text = "[center]0"
+text = "[center]Score: 0"
 
 [node name="win" type="Panel" parent="."]
 offset_left = 781.0
@@ -340,8 +386,8 @@ bbcode_enabled = true
 [node name="Sprite2D" type="Sprite2D" parent="win"]
 z_index = -1
 z_as_relative = false
-position = Vector2(170, 59)
-scale = Vector2(7.46925, 5.92969)
+position = Vector2(170, 57.625)
+scale = Vector2(7.46925, 5.88672)
 texture = SubResource("GradientTexture2D_3vqss")
 
 [node name="turn" type="Panel" parent="."]

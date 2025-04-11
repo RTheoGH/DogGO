@@ -18,6 +18,9 @@ func _on_launch_pressed() -> void:
 	player1.ai_mode = $player1Options/Player1Selection.selected
 	player2.ai_mode = $player2Options/Player2Selection.selected
 	
+	player1.nb_pierres = int($BoardSize2.get_item_text($BoardSize2.selected))
+	player2.nb_pierres = int($BoardSize2.get_item_text($BoardSize2.selected))
+	
 	Gamemaster.players = [player1, player2]
 	get_tree().change_scene_to_packed(preload("res://src/scenes/board/board.tscn"))
 

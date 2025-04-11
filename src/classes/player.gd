@@ -17,9 +17,6 @@ var montecarlo = preload("res://src/scripts/montecarlo.gd").new()
 
 func _play(board):
 	var heuristic_fun:Callable;
-	match heuristic:
-		HEURISTICS.DUMB:
-			heuristic_fun = heuristic_dumb
 	
 	
 	
@@ -46,21 +43,13 @@ func play_random(board):
 			return
 	print("PAS TROUVE D'EMPLACEMENT")
 
-func play_minmax(board):
-	var preview = board.preview()
-
-func heuristic_dumb():
-	pass
-	
-
-func win_condition():
-	pass
-
 
 func play_montecarlo(board):
-	var preview = board.preview()
-	montecarlo.play(team, "x", board.map_size, preview["board"], preview)
+	var move = montecarlo.play(team, "x" if team == "o" else "o", board.map_size, board)
 	
-func montercarlo_rec(preview:Array, n_moves:int, n_bests:int, k:int):
-	var possible_moves:Array[Vector2i] = []
-	
+	if board.try_take(move):
+		await board.take(move)
+		Gamemaster.current_player._finish_turn()
+	else:
+		print("DEFAULTING TO ARNDOM")
+		play_random(board)
