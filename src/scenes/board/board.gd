@@ -77,14 +77,13 @@ func clear_all(team:String, group_id:int):
 	for p in groups[team][group_id]:
 		await get_tree().create_timer(0.15).timeout
 		
+		grid[p.x][p.y].clear()
 		for n in get_neighbors(p):
 			var n_team:String = grid[n.x][n.y].team
 			var n_id:int = grid[n.x][n.y].group_id
 			
 			if n_team != "NEUTRAL":
 				pos_deg_liberte[n_team][n_id].append(p)
-		
-		grid[p.x][p.y].clear()
 	
 	groups[team].erase(group_id)
 	pos_deg_liberte[team].erase(group_id)
@@ -93,7 +92,6 @@ func try_take(pos:Vector2i) -> bool:
 	if grid[pos.x][pos.y].team != "NEUTRAL": return false
 	for n in get_neighbors(pos):
 		if grid[n.x][n.y].team == "NEUTRAL":
-			print("yes")
 			return true
 		elif grid[n.x][n.y].team == Gamemaster.current_player.team && (pos_deg_liberte[Gamemaster.current_player.team][grid[n.x][n.y].group_id].size() > 1):
 			return true
