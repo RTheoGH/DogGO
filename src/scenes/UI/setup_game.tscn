@@ -37,7 +37,7 @@ offset_top = 34.2
 offset_bottom = 98.08
 theme_override_fonts/font = ExtResource("2_et1p1")
 theme_override_font_sizes/font_size = 150
-text = "Setup Game"
+text = "Nouvelle partie"
 horizontal_alignment = 1
 
 [node name="Back" type="Button" parent="."]
@@ -55,7 +55,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_et1p1")
 theme_override_font_sizes/font_size = 66
-text = "Back"
+text = "Revenir"
 metadata/_edit_use_anchors_ = true
 
 [node name="BoardSize" type="OptionButton" parent="."]
@@ -148,7 +148,7 @@ offset_top = -12.36
 offset_right = -0.280029
 theme_override_fonts/font = ExtResource("2_et1p1")
 theme_override_font_sizes/font_size = 66
-text = "Launch"
+text = "Lancer"
 metadata/_edit_use_anchors_ = true
 
 [node name="player1Options" type="VBoxContainer" parent="."]
@@ -185,10 +185,10 @@ theme_override_fonts/font = ExtResource("2_et1p1")
 theme_override_font_sizes/font_size = 55
 selected = 0
 item_count = 3
-popup/item_0/text = "Joueur"
-popup/item_1/text = "Aleatoire"
+popup/item_0/text = "  Joueur"
+popup/item_1/text = "  IA niveau 1"
 popup/item_1/id = 1
-popup/item_2/text = "Montecarlo"
+popup/item_2/text = "  IA niveau 2"
 popup/item_2/id = 2
 
 [node name="player2Options" type="VBoxContainer" parent="."]
@@ -208,7 +208,7 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_et1p1")
 theme_override_font_sizes/font_size = 82
-text = "Marshall"
+text = "Marcus"
 horizontal_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="player2Options"]
@@ -225,10 +225,10 @@ theme_override_fonts/font = ExtResource("2_et1p1")
 theme_override_font_sizes/font_size = 55
 selected = 0
 item_count = 3
-popup/item_0/text = "Joueur"
-popup/item_1/text = "Aleatoire"
+popup/item_0/text = "  Joueur"
+popup/item_1/text = "  IA niveau 1"
 popup/item_1/id = 1
-popup/item_2/text = "Montecarlo"
+popup/item_2/text = "  IA niveau 2"
 popup/item_2/id = 2
 
 [node name="Menu" type="AudioStreamPlayer2D" parent="."]

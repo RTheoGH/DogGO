@@ -337,7 +337,7 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("6_hjuy0")
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
-text = "[center]Marshall"
+text = "[center]Marcus"
 
 [node name="ColorRect2" type="Panel" parent="Marshall"]
 offset_left = -24.0

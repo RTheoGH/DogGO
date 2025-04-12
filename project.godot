@@ -31,6 +31,10 @@ window/stretch/mode="canvas_items"
 
 sheep=""
 
+[gui]
+
+theme/custom="res://resources/main_theme.tres"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

@@ -245,7 +245,7 @@ func announce_winner():
 	$squares.hide()
 	
 	if list_pions[0] > list_pions[1]:
-		text = "[center][color=red]Marshall[color=black] gagne !"
+		text = "[center][color=red]Marcus[color=black] gagne !"
 	elif list_pions[0] < list_pions[1]:
 		text = "[center][color=blue]Chase[color=black] gagne !"
 	else:

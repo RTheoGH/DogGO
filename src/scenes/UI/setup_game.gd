@@ -3,9 +3,11 @@ var player_selection  = ["User", "Random", "Montecarlo"]
 var bsize = [7, 14]
 
 func _ready() -> void:
-	print("hello")
-
-
+	$player2Options/Player2Selection.get_popup().get_window().transparent = true
+	$player1Options/Player1Selection.get_popup().get_window().transparent = true
+	$BoardSize2.get_popup().get_window().transparent = true
+	$BoardSize.get_popup().get_window().transparent = true
+	
 func _on_launch_pressed() -> void:
 	pass # Replace with function body.
 	var player1 = Player.new()
