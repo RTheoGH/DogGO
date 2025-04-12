@@ -267,11 +267,13 @@ func _on_show_board_pressed() -> void:
 	
 	if $squares.is_visible():
 		$squares.hide()
+		$new.show()
 	else:
 		$squares.show()
 	
 	if $win.is_visible():
 		$win.hide()
+		$new.hide()
 	else:
 		$win.show()
 		
@@ -282,7 +284,7 @@ func show_turn_message():
 	if tour == "o":
 		$turn/turn_text.text = "[center]C'est au tour de [color=blue]Chase[color=black] de jouer"
 	elif tour == "x":
-		$turn/turn_text.text = "[center]C'est au tour de [color=red]Marshall[color=black] de jouer"
+		$turn/turn_text.text = "[center]C'est au tour de [color=red]Marcus[color=black] de jouer"
 	else:
 		$turn/turn_text.text = "Erreur tour"
 
