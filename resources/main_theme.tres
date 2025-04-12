@@ -1,6 +1,4 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://e24il7rmq5v5"]
-
-[ext_resource type="FontFile" uid="uid://yvflshvt4htr" path="res://resources/pixeltype.ttf" id="1_c4u05"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://e24il7rmq5v5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rs3ex"]
 
@@ -52,7 +50,6 @@ shadow_size = 3
 shadow_offset = Vector2(2, 2)
 
 [sub_resource type="FontVariation" id="FontVariation_uhd3n"]
-base_font = ExtResource("1_c4u05")
 variation_embolden = -0.08
 variation_transform = Transform2D(2, 0, 0, 2, 0, 0)
 spacing_glyph = 6
@@ -73,7 +70,6 @@ shadow_size = 3
 shadow_offset = Vector2(2, 2)
 
 [sub_resource type="FontVariation" id="FontVariation_mv7ld"]
-base_font = ExtResource("1_c4u05")
 variation_transform = Transform2D(2, 0, 0, 2, 0, 0)
 spacing_glyph = 6
 spacing_top = 10
@@ -92,7 +88,6 @@ shadow_size = 5
 shadow_offset = Vector2(4, 4)
 
 [resource]
-default_font = ExtResource("1_c4u05")
 Button/styles/focus = SubResource("StyleBoxEmpty_rs3ex")
 Button/styles/hover = SubResource("StyleBoxFlat_smyqn")
 Button/styles/normal = SubResource("StyleBoxFlat_wh1fo")
