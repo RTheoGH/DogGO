@@ -213,7 +213,8 @@ func _on_pass_pressed() -> void:
 	show_turn_message()
 
 func _on_exit_pressed() -> void:
-	get_tree().quit()
+	#get_tree().quit()
+	Gamemaster.to_menu()
 
 func _on_new_pressed() -> void:
 	Gamemaster.restart_with_same_settings()

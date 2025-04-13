@@ -56,4 +56,6 @@ func restart_with_same_settings(): #changé parce que pas le temps
 
 func to_menu():
 	game_on = false
+	can_play = true
+	players = []
 	get_tree().change_scene_to_packed(preload("res://src/scenes/UI/mainmenue.tscn"))
