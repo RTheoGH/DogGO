@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c1vpajhxlr42h"]
+[gd_scene load_steps=8 format=3 uid="uid://bs18gygsucgaa"]
 
 [ext_resource type="Script" path="res://src/scenes/UI/mainmenue.gd" id="1_d2d1a"]
 [ext_resource type="Texture2D" uid="uid://bdk1mwdtb2fbb" path="res://resources/images/dog_town.png" id="2_xqd27"]

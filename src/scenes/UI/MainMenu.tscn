@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://d1ithpcrhcp6t"]
+[gd_scene load_steps=6 format=3 uid="uid://cqkoykjomiyhy"]
 
 [ext_resource type="Texture2D" uid="uid://bdk1mwdtb2fbb" path="res://resources/images/dog_town.png" id="1_yi3xr"]
 [ext_resource type="FontFile" uid="uid://yvflshvt4htr" path="res://resources/pixeltype.ttf" id="2_hs7oa"]

@@ -35,6 +35,8 @@ func next_turn():
 	can_play = true
 	current_player._play.call_deferred(board_node)
 	await turn_finished
+	if !game_on: return
+		
 	print("turn finished\n")
 	current_player_index = (current_player_index+1) % players.size()
 	current_player = players[current_player_index]
@@ -42,7 +44,8 @@ func next_turn():
 	can_play = false
 	await get_tree().create_timer(0.7).timeout
 	
-	board_node.check_win_condition()
+	if game_on:
+		board_node.check_win_condition()
 
 func win(player: Player):
 	game_on = false
@@ -52,10 +55,11 @@ func restart_with_same_settings(): #changé parce que pas le temps
 	game_on = false
 	can_play = true
 	players = []
+	turn_finished.emit()
 	get_tree().change_scene_to_packed(preload("res://src/scenes/UI/setup_game.tscn"))
 
 func to_menu():
 	game_on = false
 	can_play = true
-	players = []
+	turn_finished.emit()
 	get_tree().change_scene_to_packed(preload("res://src/scenes/UI/mainmenue.tscn"))

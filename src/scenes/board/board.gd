@@ -107,6 +107,7 @@ func try_take(pos:Vector2i) -> bool:
 	return false
 
 func take(pos:Vector2i):
+	
 	var curr_team := Gamemaster.current_player.team
 	var curr_id:int = current_id[curr_team]
 	print(grid[pos.x][pos.y].group_id)
@@ -189,16 +190,16 @@ func check_can_play() -> bool:
  
 func check_win_condition():
 	var skip_turn = false # à faire : si les deux joueurs skippent leur tour
-	if((player_1.nb_pierres == 0 and player_2.nb_pierres == 0) or skip_turn or !(check_can_play())):
+	if((Gamemaster.players[0].nb_pierres == 0 and Gamemaster.players[1].nb_pierres == 0) or skip_turn or !(check_can_play())):
 		var nb_pierre_1 = 0
 		var nb_pierre_2 = 0
 		for i in map_size.x:
 			for j in map_size.y:
-				if grid[i][j].team == player_1.team:
+				if grid[i][j].team == Gamemaster.players[0].team:
 					nb_pierre_1 += 1
 				else:
 					nb_pierre_2 += 1
-		var winner = player_1 if nb_pierre_1 > nb_pierre_2 else player_2
+		var winner = Gamemaster.players[0] if nb_pierre_1 > nb_pierre_2 else Gamemaster.players[1]
 		Gamemaster.win(winner)
 		announce_winner()
 

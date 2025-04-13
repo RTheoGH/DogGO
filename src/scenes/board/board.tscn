@@ -1,7 +1,6 @@
-[gd_scene load_steps=22 format=3 uid="uid://b4ei8rii3s46p"]
+[gd_scene load_steps=19 format=3 uid="uid://b4ei8rii3s46p"]
 
 [ext_resource type="Script" path="res://src/scenes/board/board.gd" id="1_uoraa"]
-[ext_resource type="Script" path="res://src/classes/player.gd" id="2_6ai7i"]
 [ext_resource type="Texture2D" uid="uid://cs1yqiple4i24" path="res://resources/images/chase.png" id="3_s857l"]
 [ext_resource type="Texture2D" uid="uid://buut74wa6585s" path="res://resources/images/marshall.png" id="4_if2mg"]
 [ext_resource type="PackedScene" uid="uid://b2ve3jbgajvf7" path="res://src/scenes/Text/text.tscn" id="4_n5b7x"]
@@ -11,22 +10,6 @@
 [ext_resource type="AudioStream" uid="uid://dwcg8uoggpc8o" path="res://resources/sons/menu.ogg" id="8_qbf45"]
 [ext_resource type="AudioStream" uid="uid://jjmmwtovxn8n" path="res://resources/sons/chase.mp3" id="10_ex3ts"]
 [ext_resource type="AudioStream" uid="uid://dqu10trofgmjv" path="res://resources/sons/marshall.mp3" id="11_7wsgl"]
-
-[sub_resource type="Resource" id="Resource_sal3q"]
-script = ExtResource("2_6ai7i")
-name = "Utilisateur"
-ai_mode = 2
-heuristic = 0
-nb_pierres = 25
-team = "x"
-
-[sub_resource type="Resource" id="Resource_ysuud"]
-script = ExtResource("2_6ai7i")
-name = "IA"
-ai_mode = 1
-heuristic = 0
-nb_pierres = 25
-team = "o"
 
 [sub_resource type="Gradient" id="Gradient_odbm8"]
 interpolation_mode = 2
@@ -113,8 +96,6 @@ corner_radius_bottom_left = 20
 
 [node name="board" type="Node2D"]
 script = ExtResource("1_uoraa")
-player_1 = SubResource("Resource_sal3q")
-player_2 = SubResource("Resource_ysuud")
 
 [node name="squares" type="Control" parent="."]
 layout_mode = 3
@@ -176,7 +157,7 @@ offset_right = 1897.0
 offset_bottom = 1051.0
 theme_override_fonts/font = ExtResource("6_hjuy0")
 theme_override_font_sizes/font_size = 36
-text = "Fermer le jeu"
+text = "Revenir au menu"
 
 [node name="CPT_pion1" type="RichTextLabel" parent="."]
 offset_right = 40.0
